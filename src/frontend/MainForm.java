@@ -1,9 +1,13 @@
-package Interfaz;
+package frontend;
 
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JInternalFrame;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JList;
 
 public class MainForm {
 
@@ -41,8 +45,16 @@ public class MainForm {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
-		JLabel lblNewLabel = new JLabel("Primer modelo TP");
-		lblNewLabel.setBounds(165, 11, 147, 25);
-		frame.getContentPane().add(lblNewLabel);
+		JButton btnNewButton = new JButton("New button");
+		btnNewButton.setBounds(315, 240, 89, 23);
+		frame.getContentPane().add(btnNewButton);
+		
+		JButton btnNewButton_1 = new JButton("New button");
+		btnNewButton_1.setBounds(34, 240, 89, 23);
+		frame.getContentPane().add(btnNewButton_1);
+		
+		JButton btnNewButton_3 = new JButton("New button");
+		btnNewButton_3.setBounds(172, 240, 89, 23);
+		frame.getContentPane().add(btnNewButton_3);
 	}
 }
