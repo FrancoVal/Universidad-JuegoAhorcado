@@ -2,12 +2,8 @@ package frontend;
 
 import java.awt.EventQueue;
 
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JInternalFrame;
-import javax.swing.BoxLayout;
 import javax.swing.JButton;
-import javax.swing.JList;
+import javax.swing.JFrame;
 
 public class MainForm {
 
