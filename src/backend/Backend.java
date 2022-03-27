@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 
-public class AhorcadoBackend {
+public class Backend {
 	// creamos un listado para poner las palabras del juego.
 
 	static List<String> listado = new ArrayList<>();
@@ -78,6 +78,7 @@ public class AhorcadoBackend {
 		 */
 		String palabra = listaPalabras.get(indiceRandom.nextInt(listaPalabras.size()));
 
+		System.out.println(palabra);
 		return palabra;
 	}
 
