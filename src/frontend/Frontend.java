@@ -3,9 +3,18 @@ package frontend;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 
@@ -57,14 +66,25 @@ public class Frontend {
 		frameInicial.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frameInicial.getContentPane().setLayout(null);
 
-		JButton botonMusica = new JButton("Musica");
-		botonMusica.setBounds(308, 215, 110, 23);
-		frameInicial.getContentPane().add(botonMusica);
-		botonMusica.addActionListener(new ActionListener() {
+		fondoDePantalla(frameInicial);
+
+		JButton botonMusicaIniciar = new JButton("\u25B6");
+		botonMusicaIniciar.setBounds(393, 0, 43, 23);
+		frameInicial.getContentPane().add(botonMusicaIniciar);
+		botonMusicaIniciar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				accionBoton("Musica");
+				accionBoton("Iniciar Musica");
 			}
 		});
+
+//		JButton botonMusicaDetener = new JButton("\u23F8");
+//		botonMusicaDetener.setBounds(351, 0, 43, 23);
+//		frameInicial.getContentPane().add(botonMusicaDetener);
+//		botonMusicaDetener.addActionListener(new ActionListener() {
+//			public void actionPerformed(ActionEvent e) {
+//				accionBoton("Detener Musica");
+//			}
+//		});
 
 		JButton botonInstrucciones = new JButton("Instrucciones");
 		botonInstrucciones.setBounds(28, 215, 110, 23);
@@ -83,12 +103,12 @@ public class Frontend {
 			}
 		});
 		frameInicial.getContentPane().add(botonInicio);
-
 		return frameInicial;
 	}
 
 	private JFrame panelIdioma() {
 		frameIdioma = new JFrame();
+		frameIdioma.setTitle("Ahorcado 2.0");
 		frameIdioma.getContentPane().setLayout(null);
 		frameIdioma.setBounds(100, 100, 450, 300);
 		frameIdioma.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -141,9 +161,14 @@ public class Frontend {
 
 	private void accionBoton(String boton) {
 		switch (boton) {
-		case "Musica": {
-
+		case "Iniciar Musica": {
+			estadoMusica();
+			break;
 		}
+//		case "Detener Musica": {
+//			estadoMusica(false);
+//			break;
+//		}
 		case "Instrucciones": {
 			JOptionPane.showMessageDialog(frameInicial, "bla bla bla");
 			break;
@@ -172,6 +197,31 @@ public class Frontend {
 			break;
 		}
 
+		}
+	}
+
+	public void estadoMusica() {
+		try {
+			AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File("src/data/columbia.wav"));
+			Clip clip = AudioSystem.getClip();
+			clip.open(audioInputStream);
+			if (!clip.isRunning()) {
+				clip.start();
+			} else {
+				clip.stop();
+			}
+		} catch (Exception ex) {
+			System.out.println("Error with playing sound.");
+			ex.printStackTrace();
+		}
+	}
+	
+	private void fondoDePantalla(JFrame frame) {
+		try {
+			BufferedImage img = ImageIO.read(new File("src/Data/Background.png"));
+			frame.setContentPane(new JLabel (new ImageIcon(img)));
+		} catch (IOException e1) {
+			e1.printStackTrace();
 		}
 	}
 }
