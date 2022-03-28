@@ -15,7 +15,7 @@ public class Backend {
 
 	public static void main(String[] args) {
 		System.out.println(generarListado("español"));
-		System.out.println(elegirPalabra(listado));
+		System.out.println(elegirPalabra("español"));
 	}
 
 	public static List<String> generarListado(String idioma) {
@@ -67,7 +67,10 @@ public class Backend {
 		return str;
 	}
 
-	public static String elegirPalabra(List<String> listaPalabras) {
+	public static String elegirPalabra(String idioma) {
+		
+		List<String> listaPalabras = generarListado(idioma);
+		
 		// generamos un valor random
 		Random indiceRandom = new Random();
 

@@ -1,9 +1,9 @@
 package frontend;
 
 import java.awt.EventQueue;
+import java.awt.GridBagConstraints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
@@ -11,10 +11,8 @@ import javax.imageio.ImageIO;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 
@@ -61,6 +59,7 @@ public class Frontend {
 
 	private JFrame panelInicial() {
 		frameInicial = new JFrame();
+		fondoDePantalla(frameInicial);
 		frameInicial.setTitle("Ahorcado 2.0");
 		frameInicial.setBounds(100, 100, 450, 300);
 		frameInicial.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -77,17 +76,17 @@ public class Frontend {
 			}
 		});
 
-//		JButton botonMusicaDetener = new JButton("\u23F8");
-//		botonMusicaDetener.setBounds(351, 0, 43, 23);
-//		frameInicial.getContentPane().add(botonMusicaDetener);
-//		botonMusicaDetener.addActionListener(new ActionListener() {
-//			public void actionPerformed(ActionEvent e) {
-//				accionBoton("Detener Musica");
-//			}
-//		});
+		JButton botonMusicaDetener = new JButton("\u23F8");
+		botonMusicaDetener.setBounds(351, 0, 43, 23);
+		frameInicial.getContentPane().add(botonMusicaDetener);
+		botonMusicaDetener.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				accionBoton("Detener Musica");
+			}
+		});
 
 		JButton botonInstrucciones = new JButton("Instrucciones");
-		botonInstrucciones.setBounds(28, 215, 110, 23);
+		botonInstrucciones.setBounds(71, 215, 110, 23);
 		frameInicial.getContentPane().add(botonInstrucciones);
 		botonInstrucciones.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -96,7 +95,7 @@ public class Frontend {
 		});
 
 		JButton botonInicio = new JButton("Comenzar juego");
-		botonInicio.setBounds(161, 215, 110, 23);
+		botonInicio.setBounds(244, 215, 110, 23);
 		botonInicio.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				accionBoton("Comenzar juego");
@@ -108,6 +107,7 @@ public class Frontend {
 
 	private JFrame panelIdioma() {
 		frameIdioma = new JFrame();
+		fondoDePantalla(frameIdioma);
 		frameIdioma.setTitle("Ahorcado 2.0");
 		frameIdioma.getContentPane().setLayout(null);
 		frameIdioma.setBounds(100, 100, 450, 300);
@@ -151,24 +151,74 @@ public class Frontend {
 
 		return frameIdioma;
 	}
+	
+	private JFrame panelDificultad() {
+		frameDificultad = new JFrame();
+		fondoDePantalla(frameDificultad);
+		frameDificultad.setTitle("Ahorcado 2.0");
+		frameDificultad.getContentPane().setLayout(null);
+		frameDificultad.setBounds(100, 100, 450, 300);
+		frameDificultad.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+		JButton botonInicial = new JButton("Inicial");
+		botonInicial.setBounds(169, 56, 89, 23);
+		frameDificultad.getContentPane().add(botonInicial);
+		botonInicial.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				accionBoton("Inicial");
+			}
+		});
+
+		JButton botonMedio = new JButton("Medio");
+		botonMedio.setBounds(169, 90, 89, 23);
+		frameDificultad.getContentPane().add(botonMedio);
+		botonMedio.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				accionBoton("Medio");
+			}
+		});
+
+		JButton botonDificil = new JButton("Dificil");
+		botonDificil.setBounds(169, 124, 89, 23);
+		frameDificultad.getContentPane().add(botonDificil);
+		botonDificil.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				accionBoton("Dificil");
+			}
+		});
+
+		JButton botonVuelta = new JButton("Volver al menu");
+		botonVuelta.setBounds(10, 227, 114, 23);
+		frameDificultad.getContentPane().add(botonVuelta);
+		botonVuelta.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				accionBoton("Volver al menu");
+			}
+		});
+		
+		return frameDificultad;
+	}
+	
+//	private JFrame panelJuego() {
+//	}
 
 	private void volverAlMenu() {
 		frameInicial.setVisible(true);
 		frameIdioma.setVisible(false);
-//		frameDificultad.setVisible(false);
+		frameDificultad.setVisible(false);
 //		juego.setVisible(false);
 	}
 
 	private void accionBoton(String boton) {
 		switch (boton) {
 		case "Iniciar Musica": {
-			estadoMusica();
+			estadoMusica(true);
 			break;
 		}
-//		case "Detener Musica": {
-//			estadoMusica(false);
-//			break;
-//		}
+		case "Detener Musica": {
+			estadoMusica(false);
+			break;
+		}
 		case "Instrucciones": {
 			JOptionPane.showMessageDialog(frameInicial, "bla bla bla");
 			break;
@@ -181,14 +231,23 @@ public class Frontend {
 			break;
 		}
 		case "Español": {
+			panelDificultad();
+			frameDificultad.setVisible(true);
+			frameIdioma.setVisible(false);
 			Backend.generarListado("Español");
 			break;
 		}
 		case "Ingles": {
+			panelDificultad();
+			frameDificultad.setVisible(true);
+			frameIdioma.setVisible(false);
 			Backend.generarListado("Ingles");
 			break;
 		}
 		case "Portugues": {
+			panelDificultad();
+			frameDificultad.setVisible(true);
+			frameIdioma.setVisible(false);
 			Backend.generarListado("Portugues");
 			break;
 		}
@@ -200,12 +259,12 @@ public class Frontend {
 		}
 	}
 
-	public void estadoMusica() {
+	public void estadoMusica(boolean estado) {
 		try {
 			AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File("src/data/columbia.wav"));
 			Clip clip = AudioSystem.getClip();
 			clip.open(audioInputStream);
-			if (!clip.isRunning()) {
+			if (estado) {
 				clip.start();
 			} else {
 				clip.stop();
@@ -218,8 +277,12 @@ public class Frontend {
 	
 	private void fondoDePantalla(JFrame frame) {
 		try {
-			BufferedImage img = ImageIO.read(new File("src/Data/Background.png"));
-			frame.setContentPane(new JLabel (new ImageIcon(img)));
+			BackgroundPane background = new BackgroundPane();
+            background.setBackground(ImageIO.read(new File("src/data/Background.png")));
+            frame.setContentPane(background);
+            frame.getContentPane().setLayout(null);
+            GridBagConstraints gbc = new GridBagConstraints();
+            gbc.gridwidth = GridBagConstraints.REMAINDER;
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}
