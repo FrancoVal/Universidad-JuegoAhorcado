@@ -17,6 +17,7 @@ import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 
 import backend.Backend;
+import backend.Idioma;
 
 public class Frontend {
 
@@ -234,21 +235,21 @@ public class Frontend {
 			panelDificultad();
 			frameDificultad.setVisible(true);
 			frameIdioma.setVisible(false);
-			Backend.generarListado("Español");
+			Backend.generarListado(Idioma.ESPAÑOL);
 			break;
 		}
 		case "Ingles": {
 			panelDificultad();
 			frameDificultad.setVisible(true);
 			frameIdioma.setVisible(false);
-			Backend.generarListado("Ingles");
+			Backend.generarListado(Idioma.INGLES);
 			break;
 		}
 		case "Portugues": {
 			panelDificultad();
 			frameDificultad.setVisible(true);
 			frameIdioma.setVisible(false);
-			Backend.generarListado("Portugues");
+			Backend.generarListado(Idioma.FRANCES);
 			break;
 		}
 		case "Volver al menu": {

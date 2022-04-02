@@ -1,9 +1,9 @@
 package backend;
 
 public enum Idioma {
-	ESPAÑOL ("español"), 
-	INGLES ("ingles"), 
-	FRANCES ("frances");
+	ESPAÑOL ("Español"), 
+	INGLES ("Ingles"), 
+	FRANCES ("Frances");
 	
 	private String nombre;
 	

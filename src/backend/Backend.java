@@ -14,48 +14,25 @@ public class Backend {
 	static List<String> listado = new ArrayList<>();
 
 	public static void main(String[] args) {
-		System.out.println(generarListado("español"));
-		System.out.println(elegirPalabra("español"));
+		
+		System.out.println(generarListado(Idioma.ESPAÑOL));
+		System.out.println(elegirPalabra(Idioma.ESPAÑOL));
 	}
 
-	public static List<String> generarListado(String idioma) {
-		/*
-		 * el try catch esta unicamente para que java no de problemas ya que es
-		 * imposible se introduzca una variable de idioma que no tenga listado
-		 * existente.
-		 */
+	public static List<String> generarListado(Idioma idioma) {
+		
 		try {
-			// cambiamos segun el idioma.
-			switch (idioma) {
-			case "español":
-				// leemos el archivo con las palabras y las pasamos a un arraylist.
-				Scanner escaneoEspañol = new Scanner(new File("src/data/listaEspañol.txt"));
-				// siempre y cuando haya una palabra mas, seguimos agregando.
-				while (escaneoEspañol.hasNext()) {
-					/*
-					 * si te preguntas, ñque hace este metodo aca? es para atajar palabras que estan
-					 * en el txt que tengan tildes, o en frances algun caracter raro.
-					 */
-					listado.add(removerCaracteresEspeciales(escaneoEspañol.nextLine()));
-				}
-				break;
-			case "ingles":
-				Scanner escaneoIngles = new Scanner(new File("src/data/listaIngles.txt"));
-				while (escaneoIngles.hasNext()) {
-					listado.add(removerCaracteresEspeciales(escaneoIngles.nextLine()));
-				}
-				break;
-			case "frances":
-				Scanner escaneoFrances = new Scanner(new File("src/data/listaFrances.txt"));
-				while (escaneoFrances.hasNext()) {
-					listado.add(removerCaracteresEspeciales(escaneoFrances.nextLine()));
-				}
-				break;
+			Scanner escaneo = new Scanner(new File("src/data/lista" + idioma.nombre() + ".txt"));
+
+			while (escaneo.hasNext()) {
+				listado.add(removerCaracteresEspeciales(escaneo.nextLine()));
 			}
-		} catch (FileNotFoundException e) { // ñTendria que ir "filenotfoundexception" pero no me lo toma?
+
+		} catch (FileNotFoundException e) { //
 			System.out.println("problemas");
 			e.printStackTrace();
 		}
+
 		// devolvemos el listado de palabras.
 		return listado;
 	}
@@ -67,10 +44,10 @@ public class Backend {
 		return str;
 	}
 
-	public static String elegirPalabra(String idioma) {
-		
+	public static String elegirPalabra(Idioma idioma) {
+
 		List<String> listaPalabras = generarListado(idioma);
-		
+
 		// generamos un valor random
 		Random indiceRandom = new Random();
 
