@@ -19,7 +19,7 @@ import java.awt.GridLayout;
 public class ahorcado extends JFrame {
 
 	private JPanel contentPane;
-	private JTextField inputAdivinarLetra;
+	private JTextField textField;
 
 	/**
 	 * Launch the application.
@@ -52,44 +52,44 @@ public class ahorcado extends JFrame {
 		contentPane.add(panel, BorderLayout.SOUTH);
 		panel.setLayout(new GridLayout(0, 8, 0, 0));
 		
-		Component margenInferiorIzquierdo = Box.createHorizontalGlue();
-		margenInferiorIzquierdo.setEnabled(false);
-		margenInferiorIzquierdo.setFont(new Font("Dialog", Font.PLAIN, 16));
-		panel.add(margenInferiorIzquierdo);
+		Component horizontalGlue = Box.createHorizontalGlue();
+		horizontalGlue.setEnabled(false);
+		horizontalGlue.setFont(new Font("Dialog", Font.PLAIN, 16));
+		panel.add(horizontalGlue);
 		
-		JPanel panelCronometro = new JPanel();
-		panel.add(panelCronometro);
+		JPanel panel_1 = new JPanel();
+		panel.add(panel_1);
 		
-		JLabel etiquetaTextoTiempoRestante = new JLabel("Tiempo restante:");
-		panelCronometro.add(etiquetaTextoTiempoRestante);
-		etiquetaTextoTiempoRestante.setHorizontalAlignment(SwingConstants.TRAILING);
-		etiquetaTextoTiempoRestante.setFont(new Font("Dialog", Font.PLAIN, 10));
+		JLabel lblNewLabel_1 = new JLabel("Tiempo restante:");
+		panel_1.add(lblNewLabel_1);
+		lblNewLabel_1.setHorizontalAlignment(SwingConstants.TRAILING);
+		lblNewLabel_1.setFont(new Font("Dialog", Font.PLAIN, 10));
 		
-		JLabel etiquetaCronometroTiempoRestante = new JLabel("15:00");
-		panelCronometro.add(etiquetaCronometroTiempoRestante);
-		etiquetaCronometroTiempoRestante.setFont(new Font("Dialog", Font.BOLD, 14));
-		etiquetaCronometroTiempoRestante.setHorizontalAlignment(SwingConstants.CENTER);
+		JLabel lblNewLabel = new JLabel("15:00");
+		panel_1.add(lblNewLabel);
+		lblNewLabel.setFont(new Font("Dialog", Font.BOLD, 14));
+		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		
 		Box verticalBox = Box.createVerticalBox();
-		panelCronometro.add(verticalBox);
+		panel_1.add(verticalBox);
 		
-		Component margenInferiorCentralIzquierdo = Box.createHorizontalGlue();
-		panel.add(margenInferiorCentralIzquierdo);
+		Component horizontalGlue_1 = Box.createHorizontalGlue();
+		panel.add(horizontalGlue_1);
 		
-		inputAdivinarLetra = new JTextField();
-		inputAdivinarLetra.setHorizontalAlignment(SwingConstants.CENTER);
-		inputAdivinarLetra.setFont(new Font("Dialog", Font.PLAIN, 36));
-		panel.add(inputAdivinarLetra);
-		inputAdivinarLetra.setColumns(10);
+		textField = new JTextField();
+		textField.setHorizontalAlignment(SwingConstants.CENTER);
+		textField.setFont(new Font("Dialog", Font.PLAIN, 36));
+		panel.add(textField);
+		textField.setColumns(10);
 		
-		Component margenInferiorCentralDerecho = Box.createHorizontalGlue();
-		panel.add(margenInferiorCentralDerecho);
+		Component horizontalGlue_2 = Box.createHorizontalGlue();
+		panel.add(horizontalGlue_2);
 		
-		JButton botonRendirse = new JButton("Rendirse");
-		panel.add(botonRendirse);
+		JButton btnNewButton = new JButton("Rendirse");
+		panel.add(btnNewButton);
 		
-		Component margenInferiorDerecho = Box.createHorizontalGlue();
-		panel.add(margenInferiorDerecho);
+		Component horizontalGlue_3 = Box.createHorizontalGlue();
+		panel.add(horizontalGlue_3);
 	}
 
 }

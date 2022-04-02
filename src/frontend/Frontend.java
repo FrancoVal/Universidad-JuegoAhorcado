@@ -113,12 +113,12 @@ public class Frontend {
 		frameIdioma.setBounds(100, 100, 450, 300);
 		frameIdioma.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-		JButton botonEspa√±ol = new JButton("Espa√±ol");
-		botonEspa√±ol.setBounds(169, 56, 89, 23);
-		frameIdioma.getContentPane().add(botonEspa√±ol);
-		botonEspa√±ol.addActionListener(new ActionListener() {
+		JButton botonEspaÒol = new JButton("EspaÒol");
+		botonEspaÒol.setBounds(169, 56, 89, 23);
+		frameIdioma.getContentPane().add(botonEspaÒol);
+		botonEspaÒol.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				accionBoton("Espa√±ol");
+				accionBoton("EspaÒol");
 			}
 		});
 
@@ -227,14 +227,14 @@ public class Frontend {
 			panelIdioma();
 			frameIdioma.setVisible(true);
 			frameInicial.setVisible(false);
-			JOptionPane.showMessageDialog(frameIdioma, "√±Seleccion√± el idioma con el que quer√±s jugar!");
+			JOptionPane.showMessageDialog(frameIdioma, "°Seleccion· el idioma con el que querÈs jugar!");
 			break;
 		}
-		case "Espa√±ol": {
+		case "EspaÒol": {
 			panelDificultad();
 			frameDificultad.setVisible(true);
 			frameIdioma.setVisible(false);
-			Backend.generarListado("Espa√±ol");
+			Backend.generarListado("EspaÒol");
 			break;
 		}
 		case "Ingles": {
