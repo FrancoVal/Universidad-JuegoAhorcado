@@ -7,22 +7,37 @@ public class Adivinanza {
 	private boolean[] descubrimiento;
 	
 	public Adivinanza (String desafio) {
-		this.construirSecuencia(desafio);
+		
+		int longitud = desafio.length();
+		this.palabra = new char[longitud];
+		this.descubrimiento = new boolean[longitud];
+		
+		this.construirSecuencia(desafio, longitud);
 	}
 	
 	
-	private void construirSecuencia(String desafio) {
-		
-		this.palabra = new char[desafio.length()];
-		this.descubrimiento = new boolean[desafio.length()];
-		
-		for (int i = 0; i < desafio.length(); i++) {
+	/**
+	 * Construye la lista de caracteres de la palabra a descubrir y la lista booleana (@see descubrimiento)
+	 * en falso para iniciar la adivinanza.
+	 **/
+	private void construirSecuencia(String desafio, int longitud) {
+				
+		for (int i = 0; i < longitud; i++) {
 			this.palabra[i] = desafio.charAt(i);	
 			this.descubrimiento[i] = false;
 		}
 	}
 	
 	
+	
+	/**
+	 * Probar si una letra está contenida en la adivinanza.
+	 * Si la letra existe en la palabra de la adivinanza, esta función también pide informar dicho descubrimiento.
+	 * @see informarDescubrimiento
+	 * 
+	 * @param letra. Es un char que representa la letra candidata para ver si se encuentra en la adivinanza
+	 * @return verdadero en caso de que haya una o más coincidencias o falso en caso de no haber acertado.
+	 */
 	public boolean intentar(char letra) {
 		
 		boolean existeCoincidencia = false;
@@ -47,6 +62,14 @@ public class Adivinanza {
 	}
 	
 	
+	
+	
+	/**
+	 * Obtener el estado de la adivinanza. Es decir si se acertó a cada una de lasletras 
+	 * o si todavía quedan letra para adivinar.
+	 * 
+	 * @return verdadero si todas las letras fueron adivinadas. Falso en caso de que todavía falten por adivinar.
+	 */
 	public boolean estado() {
 		
 		boolean acumuladorTodasLasLetrasFueronDescubiertas = true;
