@@ -228,7 +228,7 @@ public class Frontend {
 			panelIdioma();
 			frameIdioma.setVisible(true);
 			frameInicial.setVisible(false);
-			JOptionPane.showMessageDialog(frameIdioma, "ñSeleccionñ el idioma con el que querñs jugar!");
+			JOptionPane.showMessageDialog(frameIdioma, "¡Seleccioná el idioma con el que querés jugar!");
 			break;
 		}
 		case "Español": {
