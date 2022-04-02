@@ -14,8 +14,8 @@ public class Backend {
 	static List<String> listado = new ArrayList<>();
 
 	public static void main(String[] args) {
-		System.out.println(generarListado("español"));
-		System.out.println(elegirPalabra("español"));
+		System.out.println(generarListado("espaÃ±ol"));
+		System.out.println(elegirPalabra("espaÃ±ol"));
 	}
 
 	public static List<String> generarListado(String idioma) {
@@ -27,16 +27,16 @@ public class Backend {
 		try {
 			// cambiamos segun el idioma.
 			switch (idioma) {
-			case "español":
+			case "espaÃ±ol":
 				// leemos el archivo con las palabras y las pasamos a un arraylist.
-				Scanner escaneoEspañol = new Scanner(new File("src/data/listaEspañol.txt"));
+				Scanner escaneoEspaÃ±ol = new Scanner(new File("src/data/listaEspaÃ±ol.txt"));
 				// siempre y cuando haya una palabra mas, seguimos agregando.
-				while (escaneoEspañol.hasNext()) {
+				while (escaneoEspaÃ±ol.hasNext()) {
 					/*
-					 * si te preguntas, ¿que hace este metodo aca? es para atajar palabras que estan
+					 * si te preguntas, Ã±que hace este metodo aca? es para atajar palabras que estan
 					 * en el txt que tengan tildes, o en frances algun caracter raro.
 					 */
-					listado.add(removerCaracteresEspeciales(escaneoEspañol.nextLine()));
+					listado.add(removerCaracteresEspeciales(escaneoEspaÃ±ol.nextLine()));
 				}
 				break;
 			case "ingles":
@@ -52,7 +52,7 @@ public class Backend {
 				}
 				break;
 			}
-		} catch (FileNotFoundException e) { // ¿Tendria que ir "filenotfoundexception" pero no me lo toma?
+		} catch (FileNotFoundException e) { // Ã±Tendria que ir "filenotfoundexception" pero no me lo toma?
 			System.out.println("problemas");
 			e.printStackTrace();
 		}
