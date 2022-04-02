@@ -16,7 +16,7 @@ import java.awt.Font;
 import java.awt.Component;
 import java.awt.GridLayout;
 
-public class ahorcado extends JFrame {
+public class Ahorcado extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField inputAdivinarLetra;
@@ -28,7 +28,7 @@ public class ahorcado extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					ahorcado frame = new ahorcado();
+					Ahorcado frame = new Ahorcado();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -40,7 +40,7 @@ public class ahorcado extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public ahorcado() {
+	public Ahorcado() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 800, 600);
 		contentPane = new JPanel();
