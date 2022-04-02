@@ -14,9 +14,11 @@ public class Adivinanza {
 	private void construirSecuencia(String desafio) {
 		
 		this.palabra = new char[desafio.length()];
+		this.descubrimiento = new boolean[desafio.length()];
 		
 		for (int i = 0; i < desafio.length(); i++) {
-			this.palabra[i] = desafio.charAt(i);			
+			this.palabra[i] = desafio.charAt(i);	
+			this.descubrimiento[i] = false;
 		}
 	}
 	
