@@ -12,6 +12,7 @@ public class JuegoAhorcado {
 	private String palabra;
 	
 	
+	
 	public JuegoAhorcado(Idioma idioma, Dificultad dificultad) {
 		
 		this.crearCaracBasicas(idioma, dificultad);
@@ -36,5 +37,35 @@ public class JuegoAhorcado {
 		
 	}
 	
+	// INTENTOS
+	public boolean quedanIntentos() {
+		return (this.intentosFallidosRestantes > 0) ? true : false;
+	}
+	
+	private void restarUnIntento() {
+		this.intentosFallidosRestantes-=1;
+	}
+	
+	
+	
+	//ESTADO
+	public EstadoJuego estado() {
+		
+		if (this.quedanIntentos()) {
+			
+			return (this.adivinanza.estado()) ? EstadoJuego.GANADO : EstadoJuego.JUGANDO;
+			
+			
+		} else {
+			return EstadoJuego.PERDIDO;
+		}
+		
+		
+	}
+	
+	
+	
 	
 }
+
+
