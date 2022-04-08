@@ -24,7 +24,8 @@ public class AdivinanzaTest {
 	}
 	
 	
-	@Test public void errarLetra() {
+	@Test 
+	public void errarLetra() {
 		assertFalse(hola.intentar('z'));
 	}
 	
