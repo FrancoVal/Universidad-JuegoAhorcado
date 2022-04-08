@@ -45,7 +45,7 @@ public class JuegoAhorcado {
 	private void restarUnIntento() {
 		this.intentosFallidosRestantes-=1;
 	}
-	
+	// fin de INTENTOS
 	
 	
 	//ESTADO
@@ -53,7 +53,7 @@ public class JuegoAhorcado {
 		
 		if (this.quedanIntentos()) {
 			
-			return (this.adivinanza.estado()) ? EstadoJuego.GANADO : EstadoJuego.JUGANDO;
+			return (this.adivinanza.descubierta()) ? EstadoJuego.GANADO : EstadoJuego.JUGANDO;
 			
 			
 		} else {
@@ -62,6 +62,35 @@ public class JuegoAhorcado {
 		
 		
 	}
+	
+	public boolean seguimosJugando() {
+		return (this.estado().equals(EstadoJuego.JUGANDO)) ? true : false;
+	}
+	
+
+	public char[] verPalabraConstruida() {
+		return this.adivinanza.obtenerLetrasDescubiertas();
+	}
+	// fin de ESTADO
+	
+	//TURNO
+	public void turno(char letra) throws Exception {
+		if (this.seguimosJugando()) {
+			this.operacionesDelTurno(letra);
+		} else {
+            throw new Exception("El juego ha finalizado, no se pueden intentar más turnos");
+		}
+	}
+
+	private void operacionesDelTurno(char letra) {
+		if (!this.adivinanza.intentar(letra)) {
+			this.restarUnIntento();
+			this.listadoLetrasFallidas[this.dificultad.intentos() - this.intentosFallidosRestantes] = letra;
+		}
+	}
+	//fin de TURNO
+	
+	
 	
 	
 	
