@@ -16,7 +16,7 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 
-import backend.Backend;
+import backend.Diccionario;
 import backend.Idioma;
 
 public class Frontend {
@@ -26,7 +26,7 @@ public class Frontend {
 	private JFrame frameDificultad;
 	private JFrame juego;
 
-	Backend backend;
+	Diccionario diccionario;
 
 	/**
 	 * Launch the application.
@@ -235,21 +235,21 @@ public class Frontend {
 			panelDificultad();
 			frameDificultad.setVisible(true);
 			frameIdioma.setVisible(false);
-			Backend.generarListado(Idioma.ESPAÑOL);
+			new Diccionario(Idioma.ESPAÑOL).elegirPalabraAlAzar();
 			break;
 		}
 		case "Ingles": {
 			panelDificultad();
 			frameDificultad.setVisible(true);
 			frameIdioma.setVisible(false);
-			Backend.generarListado(Idioma.INGLES);
+			new Diccionario(Idioma.INGLES).elegirPalabraAlAzar();
 			break;
 		}
-		case "Portugues": {
+		case "Frances": {
 			panelDificultad();
 			frameDificultad.setVisible(true);
 			frameIdioma.setVisible(false);
-			Backend.generarListado(Idioma.FRANCES);
+			new Diccionario(Idioma.FRANCES).elegirPalabraAlAzar();
 			break;
 		}
 		case "Volver al menu": {
