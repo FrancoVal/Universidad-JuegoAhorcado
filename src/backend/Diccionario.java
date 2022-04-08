@@ -46,14 +46,15 @@ public class Diccionario {
 	public String elegirPalabraAlAzar() {
 
 		// generamos un valor random
-		Random indiceRandom = new Random();
+		Random random = new Random();
+		int indiceRandom = random.nextInt(this.palabras.size());
 
 		/*
 		 * decimos que "palabra" va a ser una palabra random del listado y la elegimos
 		 * sabiendo que el random se va a generar entre 0 y el maximo del listado -1
 		 *
 		 */
-		String palabraAlAzar = this.palabras.get(indiceRandom.nextInt(this.palabras.size()));
+		String palabraAlAzar = this.palabras.get(indiceRandom);
 
 		System.out.println(palabraAlAzar);
 		return palabraAlAzar;
