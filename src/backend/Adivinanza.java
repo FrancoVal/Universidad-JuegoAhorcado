@@ -5,14 +5,15 @@ public class Adivinanza {
 	
 	private char[] palabra; 
 	private boolean[] descubrimiento;
+	private int longitud;
 	
 	public Adivinanza (String desafio) {
 		
-		int longitud = desafio.length();
+		this.longitud = desafio.length();
 		this.palabra = new char[longitud];
 		this.descubrimiento = new boolean[longitud];
 		
-		this.construirSecuencia(desafio, longitud);
+		this.construirSecuencia(desafio);
 	}
 	
 	
@@ -20,9 +21,9 @@ public class Adivinanza {
 	 * Construye la lista de caracteres de la palabra a descubrir y la lista booleana (@see descubrimiento)
 	 * en falso para iniciar la adivinanza.
 	 **/
-	private void construirSecuencia(String desafio, int longitud) {
+	private void construirSecuencia(String desafio) {
 				
-		for (int i = 0; i < longitud; i++) {
+		for (int i = 0; i < this.longitud; i++) {
 			this.palabra[i] = desafio.charAt(i);	
 			this.descubrimiento[i] = false;
 		}
@@ -87,6 +88,29 @@ public class Adivinanza {
 	}
 	
 	
+	public boolean[] obtenerListadoDeAciertos() {
+		return this.descubrimiento;
+	}
+	
+	public char[] obtenerLetrasDescubiertas() {
+		char[] palabraParcial = new char[this.palabra.length];
+		
+		
+		
+		for (int i = 0; i < this.longitud; i++) {
+			
+			if(this.descubrimiento[i]) {
+				palabraParcial[i] = this.palabra[i];
+				} else {
+				palabraParcial[i] = ' ';
+				}
+
+		}
+		
+		return palabraParcial;
+				
+		
+	}
 	
 	
 	
