@@ -13,11 +13,6 @@ public class Diccionario {
 
 	private List<String> palabras = new ArrayList<>();
 
-	public static void main(String[] args) {
-
-		Diccionario ejemplo = new Diccionario(Idioma.ESPAÑOL, Dificultad.FACIL);
-		System.out.println(ejemplo.elegirPalabraAlAzar());
-	}
 
 	public Diccionario(Idioma idioma, Dificultad dificultad) {
 
@@ -49,14 +44,9 @@ public class Diccionario {
 		Random random = new Random();
 		int indiceRandom = random.nextInt(this.palabras.size());
 
-		/*
-		 * decimos que "palabra" va a ser una palabra random del listado y la elegimos
-		 * sabiendo que el random se va a generar entre 0 y el maximo del listado -1
-		 *
-		 */
 		String palabraAlAzar = this.palabras.get(indiceRandom);
 
-		System.out.println(palabraAlAzar);
+		
 		return palabraAlAzar;
 	}
 
