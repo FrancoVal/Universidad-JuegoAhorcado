@@ -31,7 +31,7 @@ public class AdivinanzaTest {
 	
 	@Test
 	public void estadoSinTerminar() {
-		assertFalse(hola.estado());
+		assertFalse(hola.descubierta());
 	}
 
 	@Test
@@ -40,7 +40,7 @@ public class AdivinanzaTest {
 		hola.intentar('o');
 		hola.intentar('l');
 		hola.intentar('a');
-		assertTrue(hola.estado());
+		assertTrue(hola.descubierta());
 		
 	}
 

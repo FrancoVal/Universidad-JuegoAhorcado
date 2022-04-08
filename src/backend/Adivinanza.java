@@ -71,7 +71,7 @@ public class Adivinanza {
 	 * 
 	 * @return verdadero si todas las letras fueron adivinadas. Falso en caso de que todavía falten por adivinar.
 	 */
-	public boolean estado() {
+	public boolean descubierta() {
 		
 		boolean acumuladorTodasLasLetrasFueronDescubiertas = true;
 		
