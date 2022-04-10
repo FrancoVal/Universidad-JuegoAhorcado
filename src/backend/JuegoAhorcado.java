@@ -5,80 +5,94 @@ public class JuegoAhorcado {
 	private Idioma idioma;
 	private Dificultad dificultad;
 	private Adivinanza adivinanza;
-	
+
 	private int intentosFallidosRestantes;
 	private char[] listadoLetrasFallidas;
-	
+
 	private String palabra;
-	
-	
-	
+
 	public JuegoAhorcado(Idioma idioma, Dificultad dificultad) {
-		
+		this(idioma, dificultad, null);
+	}
+
+	public JuegoAhorcado(Idioma idioma, Dificultad dificultad, String palabra) {
+
 		this.crearCaracBasicas(idioma, dificultad);
-		this.crearAdivinanza();
+		
+		if (palabra != null) {
+			this.palabra = palabra;
+			this.crearAdivinanza();
+		} else {
+			this.crearAdivinanzaAlAzar();
+		}
+		
+		
 
 	}
+
 	
+
 	private void crearCaracBasicas(Idioma idioma, Dificultad dificultad) {
-		
+
 		this.idioma = idioma;
 		this.dificultad = dificultad;
 		this.intentosFallidosRestantes = dificultad.intentos();
 		this.listadoLetrasFallidas = new char[this.intentosFallidosRestantes];
+
+	}
+
+	private void crearAdivinanzaAlAzar() {
+
+		Diccionario diccionario = new Diccionario(this.idioma, this.dificultad);
+		this.palabra = diccionario.elegirPalabraAlAzar();
 		
+
 	}
 	
 	private void crearAdivinanza() {
-		
-		Diccionario diccionario = new Diccionario(this.idioma, this.dificultad);
-		this.palabra = diccionario.elegirPalabraAlAzar();
+
 		adivinanza = new Adivinanza(this.palabra);
-		
+
 	}
-	
+
 	// INTENTOS
 	public boolean quedanIntentos() {
 		return (this.intentosFallidosRestantes > 0) ? true : false;
 	}
-	
+
 	private void restarUnIntento() {
-		this.intentosFallidosRestantes-=1;
+		this.intentosFallidosRestantes -= 1;
 	}
 	// fin de INTENTOS
-	
-	
-	//ESTADO
+
+	// ESTADO
 	public EstadoJuego estado() {
-		
+
 		if (this.quedanIntentos()) {
-			
+
 			return (this.adivinanza.descubierta()) ? EstadoJuego.GANADO : EstadoJuego.JUGANDO;
-			
-			
+
 		} else {
 			return EstadoJuego.PERDIDO;
 		}
-		
-		
+
 	}
-	
+
 	public boolean seguimosJugando() {
 		return (this.estado().equals(EstadoJuego.JUGANDO)) ? true : false;
 	}
-	
 
 	public char[] verPalabraConstruida() {
 		return this.adivinanza.obtenerLetrasDescubiertas();
 	}
 	// fin de ESTADO
-	
-	//TURNO
+
+	// TURNO
 	public void turno(char letra) throws Exception {
 		if (this.seguimosJugando()) {
 			this.operacionesDelTurno(letra);
 		} else {
-            throw new Exception("El juego ha finalizado, no se pueden intentar más turnos");
+			throw new Exception("El juego ha finalizado, no se pueden intentar más turnos");
 		}
 	}
 
@@ -88,13 +102,6 @@ public class JuegoAhorcado {
 			this.listadoLetrasFallidas[this.dificultad.intentos() - this.intentosFallidosRestantes] = letra;
 		}
 	}
-	//fin de TURNO
-	
-	
-	
-	
-	
-	
+	// fin de TURNO
+
 }
-
-
