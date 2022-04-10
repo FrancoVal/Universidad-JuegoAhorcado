@@ -32,20 +32,19 @@ public class Torneo {
   }
 
   private void nuevoAhorcado() {
-	  if (juegaElHumano()) {
-		  this.ahorcado = new JuegoAhorcado(this.idiomaActual, this.dificultadActual);
-	  } 
-	  else if (this.haSidoDesafiadaLaAI()) {
-			  this.ahorcado = new JuegoAhorcado(this.idiomaActual, this.dificultadActual, this.desafioPropuestoPorJugador);
-			  this.desafioPropuestoPorJugador = null;
-		  } else {
-			  this.ahorcado = null;
-		  }
-		 
-	  
+    if (juegaElHumano()) {
+      this.ahorcado = new JuegoAhorcado(this.idiomaActual, this.dificultadActual);
+    } else if (this.haSidoDesafiadaLaAI()) {
+      this.ahorcado = new JuegoAhorcado(this.idiomaActual, this.dificultadActual, this.desafioPropuestoPorJugador);
+      this.desafioPropuestoPorJugador = null;
+    } else {
+      this.ahorcado = null;
+    }
+
   }
+
   public void probarLetra(char letra)
-      throws NoHayMasIntentosException, NoTieneChancesException, 
+      throws NoHayMasIntentosException, NoTieneChancesException,
       NoPuedeRepetirLetraException, NoPuedeJugarAISinoEsDesafiadaException {
 
     /*
@@ -67,21 +66,24 @@ public class Torneo {
           "Según la dificultad, este set ayuda al jugador a no cometer el error de repetir letras usadas \n" +
           "Y la letra indicada está repetida");
     }
-    
+
     if (this.ahorcado == null && !this.juegaElHumano()) {
-    	throw new NoPuedeJugarAISinoEsDesafiadaException("No se puede probar letra \n" +
-    	          "Es turno de la AI pero no se pudo crear un ahorcado para que juegue \n" +
-    	          "porque el usuario no creó ningún desafio");
+      throw new NoPuedeJugarAISinoEsDesafiadaException("No se puede probar letra \n" +
+          "Es turno de la AI pero no se pudo crear un ahorcado para que juegue \n" +
+          "porque el usuario no creó ningún desafio");
     }
-    
-    
-    
+
     try {
       this.ahorcado.turno(letra);
 
-      if (this.ahorcado.estado().equals(EstadoJuego.GANADO) ||
-          this.ahorcado.estado().equals(EstadoJuego.PERDIDO)) {
+      if (!continuaElTurnoDelJugadorActual()) {
+
+        if (this.haGanadoElJugadorActual()) {
+          this.agregarPuntoAlJugadorActual();
+        }
+
         this.cambiarTurno();
+
       }
     } catch (Exception e) {
       throw new NoHayMasIntentosException("No se puede probar letra \n" +
@@ -148,7 +150,7 @@ public class Torneo {
 
   private void cambiarTurno() {
     if (this.juegaElHumano()) {
-    	this.turnoActual = Jugador.AI;
+      this.turnoActual = Jugador.AI;
     } else {
       this.pasarNuevoSet();
       this.turnoActual = Jugador.JUGADOR;
@@ -166,48 +168,62 @@ public class Torneo {
    */
   public EstadoJuego estadoTorneo() {
 
-    if ( this.quedanSetsPorJugar() && this.elJugadorActualTieneChances()) {
+    if (this.quedanSetsPorJugar() && this.elJugadorActualTieneChances()) {
       return EstadoJuego.JUGANDO;
     } else {
-    	return this.jugadorHumanoTieneVentaja() ? EstadoJuego.GANADO : EstadoJuego.PERDIDO;
+      return this.jugadorHumanoTieneVentaja() ? EstadoJuego.GANADO : EstadoJuego.PERDIDO;
     }
-    
+
   }
-  
+
   public boolean quedanSetsPorJugar() {
-	  return this.maximoDeSets >= this.nroDeSet ? true : false;
+    return this.maximoDeSets >= this.nroDeSet ? true : false;
   }
-  
+
   public boolean jugadorHumanoTieneVentaja() {
-	  return this.puntosJugador >= this.puntosIA ? true : false;
+    return this.puntosJugador >= this.puntosIA ? true : false;
   }
-  
+
   public void perderTurno() throws LasMaquinasNoSeRindenException {
-	  if (juegaElHumano()) {
-		  this.cambiarTurno();
-	  } else {
-		  throw new LasMaquinasNoSeRindenException("No se puede perder el turno \n" +
-		          "La IA nunca se da por vencida.");
-	  }
+    if (juegaElHumano()) {
+      this.cambiarTurno();
+    } else {
+      throw new LasMaquinasNoSeRindenException("No se puede perder el turno \n" +
+          "La IA nunca se da por vencida.");
+    }
   }
-  
+
   public boolean juegaElHumano() {
-	  return this.turnoActual.equals(Jugador.JUGADOR) ? true : false;
+    return this.turnoActual.equals(Jugador.JUGADOR) ? true : false;
   }
-  
+
   public void desafiarAI(String palabra) {
-	  
-	  this.desafioPropuestoPorJugador = palabra;
-	  
-	  if (this.ahorcado == null && !this.juegaElHumano()) {
-		  this.nuevoAhorcado();
-	  }
+
+    this.desafioPropuestoPorJugador = palabra;
+
+    if (this.ahorcado == null && !this.juegaElHumano()) {
+      this.nuevoAhorcado();
+    }
   }
-  
+
   public boolean haSidoDesafiadaLaAI() {
-	  return this.desafioPropuestoPorJugador == null ? false : true;
+    return this.desafioPropuestoPorJugador == null ? false : true;
   }
-  
-  
+
+  public boolean continuaElTurnoDelJugadorActual() {
+    return (this.ahorcado.estado().equals(EstadoJuego.JUGANDO));
+  }
+
+  public boolean haGanadoElJugadorActual() {
+    return (this.ahorcado.estado().equals(EstadoJuego.GANADO));
+  }
+
+  private void agregarPuntoAlJugadorActual() {
+    if (this.juegaElHumano()) {
+      this.puntosJugador++;
+    } else {
+      this.puntosIA++;
+    }
+  }
 
 }
