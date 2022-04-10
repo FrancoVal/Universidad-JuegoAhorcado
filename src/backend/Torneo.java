@@ -30,6 +30,9 @@ public class Torneo {
 
   }
 
+  private void nuevoAhorcado() {
+	  if (juegaElHumano())
+  }
   public void probarLetra(char letra)
       throws NoHayMasIntentosException, NoTieneChancesException, NoPuedeRepetirLetraException {
 
@@ -88,12 +91,12 @@ public class Torneo {
   }
 
   public int puntajeJugadorActual() {
-    return this.turnoActual.equals(Jugador.JUGADOR) ? this.puntosJugador : this.puntosIA;
+    return this.juegaElHumano() ? this.puntosJugador : this.puntosIA;
 
   }
 
   public int puntajeOtroJugador() {
-    return this.turnoActual.equals(Jugador.JUGADOR) ? this.puntosIA : this.puntosJugador;
+    return this.juegaElHumano() ? this.puntosIA : this.puntosJugador;
   }
 
   public boolean esteSetPermiteRepetirLetrasUsadas() {
@@ -124,11 +127,11 @@ public class Torneo {
   }
 
   private void cambiarTurno() {
-    if (this.turnoActual.equals(Jugador.AI)) {
+    if (this.juegaElHumano()) {
+    	this.turnoActual = Jugador.AI;
+    } else {
       this.pasarNuevoSet();
       this.turnoActual = Jugador.JUGADOR;
-    } else {
-      this.turnoActual = Jugador.AI;
     }
   }
 
@@ -158,5 +161,19 @@ public class Torneo {
   public boolean jugadorHumanoTieneVentaja() {
 	  return this.puntosJugador >= this.puntosIA ? true : false;
   }
+  
+  public void perderTurno() throws LasMaquinasNoSeRindenException {
+	  if (juegaElHumano()) {
+		  this.cambiarTurno();
+	  } else {
+		  throw new LasMaquinasNoSeRindenException("No se puede perder el turno \n" +
+		          "La IA nunca se da por vencida.");
+	  }
+  }
+  
+  public boolean juegaElHumano() {
+	  return this.turnoActual.equals(Jugador.JUGADOR) ? true : false;
+  }
+  
 
 }
