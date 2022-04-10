@@ -63,6 +63,10 @@ public class JuegoAhorcado {
 	private void restarUnIntento() {
 		this.intentosFallidosRestantes -= 1;
 	}
+
+  public int cantidadDeIntentosRestantes() {
+    return this.intentosFallidosRestantes;
+  }
 	// fin de INTENTOS
 
 	// ESTADO
@@ -85,6 +89,10 @@ public class JuegoAhorcado {
 	public char[] verPalabraConstruida() {
 		return this.adivinanza.obtenerLetrasDescubiertas();
 	}
+
+  public char[] verLetrasFallidasUtilizadas() {
+  return this.listadoLetrasFallidas;
+  }
 	// fin de ESTADO
 
 	// TURNO
