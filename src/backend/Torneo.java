@@ -33,6 +33,9 @@ public class Torneo {
   public void probarLetra(char letra)
       throws NoHayMasIntentosException, NoTieneChancesException, NoPuedeRepetirLetraException {
 
+    /*
+     * Esto se está refactoreando más abajo, de recibir una exception similar
+     */
     if (!this.ahorcado.quedanIntentos()) {
       throw new NoHayMasIntentosException("No se puede probar letra \n" +
           "Razón: No quedan intentos, el turno de este jugador debería haber terminado");
@@ -44,10 +47,22 @@ public class Torneo {
           "Este torneo debería haber finalizado ya");
     }
 
-    if (!this.esteSetPermiteLetrasFallidasRepetidas() && this.estaLetraFueUtilizada(letra)) {
+    if (!this.esteSetPermiteRepetirLetrasUsadas() && this.estaLetraFueUtilizada(letra)) {
       throw new NoPuedeRepetirLetraException("No se puede probar letra \n" +
           "Según la dificultad, este set ayuda al jugador a no cometer el error de repetir letras usadas \n" +
           "Y la letra indicada está repetida");
+    }
+
+    try {
+      this.ahorcado.turno(letra);
+
+      if (this.ahorcado.estado().equals(EstadoJuego.GANADO) ||
+          this.ahorcado.estado().equals(EstadoJuego.PERDIDO)) {
+        this.cambiarTurno();
+      }
+    } catch (Exception e) {
+      throw new NoHayMasIntentosException("No se puede probar letra \n" +
+          "Razón: No quedan intentos, el turno de este jugador debería haber terminado");
     }
 
   }
@@ -81,19 +96,20 @@ public class Torneo {
     return this.turnoActual.equals(Jugador.JUGADOR) ? this.puntosIA : this.puntosJugador;
   }
 
-  public boolean esteSetPermiteLetrasFallidasRepetidas() {
+  public boolean esteSetPermiteRepetirLetrasUsadas() {
 
     return this.dificultadActual.equals(Dificultad.FACIL) ? false : true;
 
   }
 
   public boolean estaLetraFueUtilizada(char letra) {
-  
-    return (buscarEnListaDeLetra(letra,this.JuegoAhorcado.))
+
+    return (buscarEnListaDeLetra(letra, this.ahorcado.verLetrasFallidasUtilizadas()) ||
+        buscarEnListaDeLetra(letra, this.ahorcado.verPalabraConstruida()));
 
   }
 
-  private boolean buscarEnListaDeLetra(char letra, char[] lista) {
+  private static boolean buscarEnListaDeLetra(char letra, char[] lista) {
 
     boolean hallazgo = false;
 
@@ -106,4 +122,41 @@ public class Torneo {
     return hallazgo;
 
   }
+
+  private void cambiarTurno() {
+    if (this.turnoActual.equals(Jugador.AI)) {
+      this.pasarNuevoSet();
+      this.turnoActual = Jugador.JUGADOR;
+    } else {
+      this.turnoActual = Jugador.AI;
+    }
+  }
+
+  private void pasarNuevoSet() {
+    this.nroDeSet++;
+
+  }
+
+  /*
+   * El estado del juego siempre es desde el punto de vista del usuario no de la
+   * AI ni del jugador actual
+   */
+  public EstadoJuego estadoTorneo() {
+
+    if ( this.quedanSetsPorJugar() && this.elJugadorActualTieneChances()) {
+      return EstadoJuego.JUGANDO;
+    } else {
+    	return this.jugadorHumanoTieneVentaja() ? EstadoJuego.GANADO : EstadoJuego.PERDIDO;
+    }
+    
+  }
+  
+  public boolean quedanSetsPorJugar() {
+	  return this.maximoDeSets >= this.nroDeSet ? true : false;
+  }
+  
+  public boolean jugadorHumanoTieneVentaja() {
+	  return this.puntosJugador >= this.puntosIA ? true : false;
+  }
+
 }
