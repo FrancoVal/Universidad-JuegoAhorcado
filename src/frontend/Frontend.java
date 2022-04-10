@@ -27,6 +27,12 @@ import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 
 import backend.Torneo;
+import backend.JuegoAhorcado;
+import backend.Adivinanza;
+import backend.Diccionario;
+import backend.Idioma;
+import backend.Dificultad;
+import controller.ControllerAhorcado;
 
 public class Frontend {
 
@@ -36,11 +42,10 @@ public class Frontend {
 	private JFrame frameJuego;
 	private JPanel panelJuego;
 
-	Torneo backend;
-
-	/**
-	 * Launch the application.
-	 */
+	ControllerAhorcado controlador = new ControllerAhorcado();
+	Torneo torneo;
+	Idioma idiomaAUtilizar;
+	Dificultad dificultadAUtilizar;
 
 	public Frontend() {
 		initialize();
@@ -65,7 +70,6 @@ public class Frontend {
 
 	private void initialize() {
 		panelInicial();
-
 	}
 
 	private JFrame panelInicial() {
@@ -142,12 +146,12 @@ public class Frontend {
 			}
 		});
 
-		JButton botonPortugues = new JButton("Portugues");
+		JButton botonPortugues = new JButton("Frances");
 		botonPortugues.setBounds(169, 124, 89, 23);
 		frameIdioma.getContentPane().add(botonPortugues);
 		botonPortugues.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				accionBoton("Portugues");
+				accionBoton("Frances");
 			}
 		});
 
@@ -162,7 +166,7 @@ public class Frontend {
 
 		return frameIdioma;
 	}
-	
+
 	private JFrame panelDificultad() {
 		frameDificultad = new JFrame();
 		fondoDePantalla(frameDificultad);
@@ -170,7 +174,7 @@ public class Frontend {
 		frameDificultad.getContentPane().setLayout(null);
 		frameDificultad.setBounds(100, 100, 450, 300);
 		frameDificultad.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
+
 		JButton botonInicial = new JButton("Inicial");
 		botonInicial.setBounds(169, 56, 89, 23);
 		frameDificultad.getContentPane().add(botonInicial);
@@ -206,12 +210,13 @@ public class Frontend {
 				accionBoton("Volver al menu");
 			}
 		});
-		
+
 		return frameDificultad;
 	}
-	
+
 	private JFrame frameJuego() {
-		
+
+		controlador.crearJuego(idiomaAUtilizar, dificultadAUtilizar);
 		frameJuego = new JFrame();
 		frameJuego.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frameJuego.setBounds(100, 100, 800, 600);
@@ -220,44 +225,44 @@ public class Frontend {
 		panelJuego.setBorder(new EmptyBorder(5, 5, 5, 5));
 		frameJuego.setContentPane(panelJuego);
 		panelJuego.setLayout(new BorderLayout(0, 0));
-		
+
 		JPanel panel = new JPanel();
 		frameJuego.add(panel, BorderLayout.SOUTH);
 		panel.setLayout(new GridLayout(0, 8, 0, 0));
-		
+
 		Component margenInferiorIzquierdo = Box.createHorizontalGlue();
 		margenInferiorIzquierdo.setEnabled(false);
 		margenInferiorIzquierdo.setFont(new Font("Dialog", Font.PLAIN, 16));
 		panel.add(margenInferiorIzquierdo);
-		
+
 		JPanel panelCronometro = new JPanel();
 		panel.add(panelCronometro);
-		
+
 		JLabel etiquetaTextoTiempoRestante = new JLabel("Tiempo restante:");
 		panelCronometro.add(etiquetaTextoTiempoRestante);
 		etiquetaTextoTiempoRestante.setHorizontalAlignment(SwingConstants.TRAILING);
 		etiquetaTextoTiempoRestante.setFont(new Font("Dialog", Font.PLAIN, 10));
-		
+
 		JLabel etiquetaCronometroTiempoRestante = new JLabel("15:00");
 		panelCronometro.add(etiquetaCronometroTiempoRestante);
 		etiquetaCronometroTiempoRestante.setFont(new Font("Dialog", Font.BOLD, 14));
 		etiquetaCronometroTiempoRestante.setHorizontalAlignment(SwingConstants.CENTER);
-		
+
 		Box verticalBox = Box.createVerticalBox();
 		panelCronometro.add(verticalBox);
-		
+
 		Component margenInferiorCentralIzquierdo = Box.createHorizontalGlue();
 		panel.add(margenInferiorCentralIzquierdo);
-		
-		inputAdivinarLetra = new JTextField();
+
+		JTextField inputAdivinarLetra = new JTextField();
 		inputAdivinarLetra.setHorizontalAlignment(SwingConstants.CENTER);
 		inputAdivinarLetra.setFont(new Font("Dialog", Font.PLAIN, 36));
 		panel.add(inputAdivinarLetra);
 		inputAdivinarLetra.setColumns(10);
-		
+
 		Component margenInferiorCentralDerecho = Box.createHorizontalGlue();
 		panel.add(margenInferiorCentralDerecho);
-		
+
 		JButton botonRendirse = new JButton("Rendirse");
 		panel.add(botonRendirse);
 		botonRendirse.addActionListener(new ActionListener() {
@@ -265,18 +270,22 @@ public class Frontend {
 				panelesFinales("derrota");
 			}
 		});
-		
+
 		Component margenInferiorDerecho = Box.createHorizontalGlue();
 		panel.add(margenInferiorDerecho);
-		
+
 		return frameJuego;
 	}
 
 	private void volverAlMenu() {
 		frameInicial.setVisible(true);
-		frameIdioma.setVisible(false);
-		frameDificultad.setVisible(false);
-		frameJuego.setVisible(false);
+		if (frameIdioma.isActive()) {
+			frameIdioma.setVisible(false);
+		} else if (frameDificultad.isActive()) {
+			frameDificultad.setVisible(false);
+		} else {
+			frameJuego.setVisible(false);
+		}
 	}
 
 	private void accionBoton(String boton) {
@@ -290,50 +299,61 @@ public class Frontend {
 			break;
 		}
 		case "Instrucciones": {
-			JOptionPane.showMessageDialog(frameInicial, "bla bla bla");
+			JOptionPane.showMessageDialog(frameInicial,
+					"A continuacion vas a poder seleccionar entre distintas opciones:\nModo de juego\nIdioma\nDificultad");
+			JOptionPane.showMessageDialog(frameInicial,
+					"Hay dos modos de juego para elegir:\nModo normal: tratas de adivinar la palabra.\nModo torneo: jugas vos y si ganas juega la maquina y asi sucesivamente.");
+			JOptionPane.showMessageDialog(frameInicial,
+					"Vas a ver tres idiomas para elegir en qué jugar:\nEspañol.\nIngles.\nFrances.");
+			JOptionPane.showMessageDialog(frameInicial,
+					"Recordá que en la dificultad:\nInicial: 5 intentos\nMedio: 3 intentos\nDificil: 1 intento\nSuerte");
 			break;
 		}
 		case "Comenzar juego": {
 			panelIdioma();
 			frameIdioma.setVisible(true);
 			frameInicial.setVisible(false);
-			JOptionPane.showMessageDialog(frameIdioma, "¡Seleccioná el idioma con el que querés jugar!");
 			break;
 		}
 		case "Español": {
+			idiomaAUtilizar = Idioma.ESPANIOL;
 			panelDificultad();
 			frameDificultad.setVisible(true);
 			frameIdioma.setVisible(false);
-			Backend.generarListado("Español");
+
 			break;
 		}
 		case "Ingles": {
+			idiomaAUtilizar = Idioma.INGLES;
 			panelDificultad();
 			frameDificultad.setVisible(true);
 			frameIdioma.setVisible(false);
-			Backend.generarListado("Ingles");
+
 			break;
 		}
-		case "Portugues": {
+		case "Frances": {
+			idiomaAUtilizar = Idioma.FRANCES;
 			panelDificultad();
 			frameDificultad.setVisible(true);
 			frameIdioma.setVisible(false);
-			Backend.generarListado("Portugues");
 			break;
 		}
 		case "Inicial": {
+			dificultadAUtilizar = Dificultad.FACIL;
 			frameJuego();
 			frameJuego.setVisible(true);
 			frameDificultad.setVisible(false);
 			break;
 		}
 		case "Medio": {
+			dificultadAUtilizar = Dificultad.MEDIO;
 			frameJuego();
 			frameJuego.setVisible(true);
 			frameDificultad.setVisible(false);
 			break;
 		}
 		case "Dificil": {
+			dificultadAUtilizar = Dificultad.DIFICIL;
 			frameJuego();
 			frameJuego.setVisible(true);
 			frameDificultad.setVisible(false);
@@ -346,7 +366,7 @@ public class Frontend {
 
 		}
 	}
-	
+
 	public void panelesFinales(String condicion) {
 		int resultadoFinal;
 		String[] buttons = { "Reiniciar", "Volver al menu", "Salir" };
@@ -391,15 +411,15 @@ public class Frontend {
 			ex.printStackTrace();
 		}
 	}
-	
+
 	private void fondoDePantalla(JFrame frame) {
 		try {
 			BackgroundPane background = new BackgroundPane();
-            background.setBackground(ImageIO.read(new File("src/data/Background.png")));
-            frame.setContentPane(background);
-            frame.getContentPane().setLayout(null);
-            GridBagConstraints gbc = new GridBagConstraints();
-            gbc.gridwidth = GridBagConstraints.REMAINDER;
+			background.setBackground(ImageIO.read(new File("src/data/Background.png")));
+			frame.setContentPane(background);
+			frame.getContentPane().setLayout(null);
+			GridBagConstraints gbc = new GridBagConstraints();
+			gbc.gridwidth = GridBagConstraints.REMAINDER;
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}

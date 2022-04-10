@@ -20,7 +20,7 @@ public class JuegoAhorcado {
 		this.crearCaracBasicas(idioma, dificultad);
 
 		if (palabra != null) {
-			this.palabra = palabra;
+			this.palabra = palabra; 
 			this.crearAdivinanza();
 		} else {
 			this.crearAdivinanzaAlAzar();
