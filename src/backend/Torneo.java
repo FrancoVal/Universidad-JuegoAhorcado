@@ -24,7 +24,7 @@ public class Torneo {
 	public enum Jugador {
 		JUGADOR, AI;
 	}
-
+ 
 	public Torneo(Idioma idioma, Dificultad dificultad) {
 
 		this.idiomaActual = idioma;

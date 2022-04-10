@@ -220,7 +220,7 @@ public class Frontend {
 		frameJuego = new JFrame();
 		frameJuego.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frameJuego.setBounds(100, 100, 800, 600);
-		fondoDePantalla(frameJuego);
+
 		panelJuego = new JPanel();
 		panelJuego.setBorder(new EmptyBorder(5, 5, 5, 5));
 		frameJuego.setContentPane(panelJuego);
@@ -299,14 +299,7 @@ public class Frontend {
 			break;
 		}
 		case "Instrucciones": {
-			JOptionPane.showMessageDialog(frameInicial,
-					"A continuacion vas a poder seleccionar entre distintas opciones:\nModo de juego\nIdioma\nDificultad");
-			JOptionPane.showMessageDialog(frameInicial,
-					"Hay dos modos de juego para elegir:\nModo normal: tratas de adivinar la palabra.\nModo torneo: jugas vos y si ganas juega la maquina y asi sucesivamente.");
-			JOptionPane.showMessageDialog(frameInicial,
-					"Vas a ver tres idiomas para elegir en qué jugar:\nEspañol.\nIngles.\nFrances.");
-			JOptionPane.showMessageDialog(frameInicial,
-					"Recordá que en la dificultad:\nInicial: 5 intentos\nMedio: 3 intentos\nDificil: 1 intento\nSuerte");
+			mostrarInstrucciones();
 			break;
 		}
 		case "Comenzar juego": {
@@ -394,6 +387,17 @@ public class Frontend {
 			}
 			break;
 		}
+	}
+	
+	public void mostrarInstrucciones() {
+		JOptionPane.showMessageDialog(frameInicial,
+				"A continuacion vas a poder seleccionar entre distintas opciones:\nModo de juego\nIdioma\nDificultad");
+		JOptionPane.showMessageDialog(frameInicial,
+				"Hay dos modos de juego para elegir:\nModo normal: tratas de adivinar la palabra.\nModo torneo: jugas vos y si ganas juega la maquina y asi sucesivamente.");
+		JOptionPane.showMessageDialog(frameInicial,
+				"Vas a ver tres idiomas para elegir en qué jugar:\nEspañol.\nIngles.\nFrances.");
+		JOptionPane.showMessageDialog(frameInicial,
+				"Recordá que en la dificultad:\nInicial: 5 intentos\nMedio: 3 intentos\nDificil: 1 intento\nSuerte");
 	}
 
 	public void estadoMusica(boolean estado) {
