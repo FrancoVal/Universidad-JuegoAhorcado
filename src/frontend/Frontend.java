@@ -1,7 +1,11 @@
 package frontend;
 
+import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.EventQueue;
+import java.awt.Font;
 import java.awt.GridBagConstraints;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -11,22 +15,28 @@ import javax.imageio.ImageIO;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
+import javax.swing.Box;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 import javax.swing.UIManager;
+import javax.swing.border.EmptyBorder;
 
-import backend.Diccionario;
-import backend.Idioma;
+import backend.Torneo;
 
 public class Frontend {
 
 	private JFrame frameInicial;
 	private JFrame frameIdioma;
 	private JFrame frameDificultad;
-	private JFrame juego;
+	private JFrame frameJuego;
+	private JPanel panelJuego;
 
-	Diccionario diccionario;
+	Torneo backend;
 
 	/**
 	 * Launch the application.
@@ -114,12 +124,12 @@ public class Frontend {
 		frameIdioma.setBounds(100, 100, 450, 300);
 		frameIdioma.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-		JButton botonEspaÃ±ol = new JButton("EspaÃ±ol");
-		botonEspaÃ±ol.setBounds(169, 56, 89, 23);
-		frameIdioma.getContentPane().add(botonEspaÃ±ol);
-		botonEspaÃ±ol.addActionListener(new ActionListener() {
+		JButton botonEspañol = new JButton("Español");
+		botonEspañol.setBounds(169, 56, 89, 23);
+		frameIdioma.getContentPane().add(botonEspañol);
+		botonEspañol.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				accionBoton("EspaÃ±ol");
+				accionBoton("Español");
 			}
 		});
 
@@ -200,14 +210,73 @@ public class Frontend {
 		return frameDificultad;
 	}
 	
-//	private JFrame panelJuego() {
-//	}
+	private JFrame frameJuego() {
+		
+		frameJuego = new JFrame();
+		frameJuego.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frameJuego.setBounds(100, 100, 800, 600);
+		fondoDePantalla(frameJuego);
+		panelJuego = new JPanel();
+		panelJuego.setBorder(new EmptyBorder(5, 5, 5, 5));
+		frameJuego.setContentPane(panelJuego);
+		panelJuego.setLayout(new BorderLayout(0, 0));
+		
+		JPanel panel = new JPanel();
+		frameJuego.add(panel, BorderLayout.SOUTH);
+		panel.setLayout(new GridLayout(0, 8, 0, 0));
+		
+		Component margenInferiorIzquierdo = Box.createHorizontalGlue();
+		margenInferiorIzquierdo.setEnabled(false);
+		margenInferiorIzquierdo.setFont(new Font("Dialog", Font.PLAIN, 16));
+		panel.add(margenInferiorIzquierdo);
+		
+		JPanel panelCronometro = new JPanel();
+		panel.add(panelCronometro);
+		
+		JLabel etiquetaTextoTiempoRestante = new JLabel("Tiempo restante:");
+		panelCronometro.add(etiquetaTextoTiempoRestante);
+		etiquetaTextoTiempoRestante.setHorizontalAlignment(SwingConstants.TRAILING);
+		etiquetaTextoTiempoRestante.setFont(new Font("Dialog", Font.PLAIN, 10));
+		
+		JLabel etiquetaCronometroTiempoRestante = new JLabel("15:00");
+		panelCronometro.add(etiquetaCronometroTiempoRestante);
+		etiquetaCronometroTiempoRestante.setFont(new Font("Dialog", Font.BOLD, 14));
+		etiquetaCronometroTiempoRestante.setHorizontalAlignment(SwingConstants.CENTER);
+		
+		Box verticalBox = Box.createVerticalBox();
+		panelCronometro.add(verticalBox);
+		
+		Component margenInferiorCentralIzquierdo = Box.createHorizontalGlue();
+		panel.add(margenInferiorCentralIzquierdo);
+		
+		inputAdivinarLetra = new JTextField();
+		inputAdivinarLetra.setHorizontalAlignment(SwingConstants.CENTER);
+		inputAdivinarLetra.setFont(new Font("Dialog", Font.PLAIN, 36));
+		panel.add(inputAdivinarLetra);
+		inputAdivinarLetra.setColumns(10);
+		
+		Component margenInferiorCentralDerecho = Box.createHorizontalGlue();
+		panel.add(margenInferiorCentralDerecho);
+		
+		JButton botonRendirse = new JButton("Rendirse");
+		panel.add(botonRendirse);
+		botonRendirse.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				panelesFinales("derrota");
+			}
+		});
+		
+		Component margenInferiorDerecho = Box.createHorizontalGlue();
+		panel.add(margenInferiorDerecho);
+		
+		return frameJuego;
+	}
 
 	private void volverAlMenu() {
 		frameInicial.setVisible(true);
 		frameIdioma.setVisible(false);
 		frameDificultad.setVisible(false);
-//		juego.setVisible(false);
+		frameJuego.setVisible(false);
 	}
 
 	private void accionBoton(String boton) {
@@ -228,28 +297,46 @@ public class Frontend {
 			panelIdioma();
 			frameIdioma.setVisible(true);
 			frameInicial.setVisible(false);
-			JOptionPane.showMessageDialog(frameIdioma, "Â¡SeleccionÃ¡ el idioma con el que querÃ©s jugar!");
+			JOptionPane.showMessageDialog(frameIdioma, "¡Seleccioná el idioma con el que querés jugar!");
 			break;
 		}
-		case "EspaÃ±ol": {
+		case "Español": {
 			panelDificultad();
 			frameDificultad.setVisible(true);
 			frameIdioma.setVisible(false);
-			new Diccionario(Idioma.ESPAÃ‘OL).elegirPalabraAlAzar();
+			Backend.generarListado("Español");
 			break;
 		}
 		case "Ingles": {
 			panelDificultad();
 			frameDificultad.setVisible(true);
 			frameIdioma.setVisible(false);
-			new Diccionario(Idioma.INGLES).elegirPalabraAlAzar();
+			Backend.generarListado("Ingles");
 			break;
 		}
-		case "Frances": {
+		case "Portugues": {
 			panelDificultad();
 			frameDificultad.setVisible(true);
 			frameIdioma.setVisible(false);
-			new Diccionario(Idioma.FRANCES).elegirPalabraAlAzar();
+			Backend.generarListado("Portugues");
+			break;
+		}
+		case "Inicial": {
+			frameJuego();
+			frameJuego.setVisible(true);
+			frameDificultad.setVisible(false);
+			break;
+		}
+		case "Medio": {
+			frameJuego();
+			frameJuego.setVisible(true);
+			frameDificultad.setVisible(false);
+			break;
+		}
+		case "Dificil": {
+			frameJuego();
+			frameJuego.setVisible(true);
+			frameDificultad.setVisible(false);
 			break;
 		}
 		case "Volver al menu": {
@@ -257,6 +344,35 @@ public class Frontend {
 			break;
 		}
 
+		}
+	}
+	
+	public void panelesFinales(String condicion) {
+		int resultadoFinal;
+		String[] buttons = { "Reiniciar", "Volver al menu", "Salir" };
+		switch (condicion) {
+		case "victoria":
+			resultadoFinal = JOptionPane.showOptionDialog(null, "!Felidades, ganaste!", "!Victoria!",
+					JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null, buttons, null);
+			if (resultadoFinal == JOptionPane.YES_OPTION) {
+				volverAlMenu();
+			} else if (resultadoFinal == JOptionPane.NO_OPTION) {
+				volverAlMenu();
+			} else {
+				System.exit(0);
+			}
+			break;
+		case "derrota":
+			resultadoFinal = JOptionPane.showOptionDialog(null, "!Mejor suerte la proxima!", "Derrota...",
+					JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null, buttons, null);
+			if (resultadoFinal == JOptionPane.YES_OPTION) {
+				volverAlMenu();
+			} else if (resultadoFinal == JOptionPane.NO_OPTION) {
+				volverAlMenu();
+			} else {
+				System.exit(0);
+			}
+			break;
 		}
 	}
 

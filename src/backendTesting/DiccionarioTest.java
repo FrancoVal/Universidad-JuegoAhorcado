@@ -1,9 +1,13 @@
-package backend;
+package backendTesting;
 
 import static org.junit.Assert.*;
 
 import org.junit.Before;
 import org.junit.Test;
+
+import backend.Diccionario;
+import backend.Dificultad;
+import backend.Idioma;
 
 public class DiccionarioTest {
 	
@@ -15,9 +19,9 @@ public class DiccionarioTest {
 	@Before
 	public void setUp() throws Exception {
 		
-		this.espaniolFacil   = new Diccionario(Idioma.ESPAÑOL, Dificultad.FACIL);
-		this.espaniolMedio   = new Diccionario(Idioma.ESPAÑOL, Dificultad.MEDIO);
-		this.espaniolDificil = new Diccionario(Idioma.ESPAÑOL, Dificultad.DIFICIL);
+		this.espaniolFacil   = new Diccionario(Idioma.ESPANIOL, Dificultad.FACIL);
+		this.espaniolMedio   = new Diccionario(Idioma.ESPANIOL, Dificultad.MEDIO);
+		this.espaniolDificil = new Diccionario(Idioma.ESPANIOL, Dificultad.DIFICIL);
 	}
 
 	@Test

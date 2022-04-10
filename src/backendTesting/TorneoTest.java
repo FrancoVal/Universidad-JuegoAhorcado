@@ -1,16 +1,25 @@
-package backend;
+package backendTesting;
 
 import static org.junit.Assert.*;
 
 import org.junit.Before;
 import org.junit.Test;
 
+import backend.Dificultad;
+import backend.EstadoJuego;
+import backend.Idioma;
+import backend.Torneo;
+import backendExceptions.NoHayMasIntentosException;
+import backendExceptions.NoPuedeJugarAISinoEsDesafiadaException;
+import backendExceptions.NoPuedeRepetirLetraException;
+import backendExceptions.NoTieneChancesException;
+
 public class TorneoTest {
 
 	private Torneo torneoArreglado;
 	@Before
 	public void setUp() throws Exception {
-		this.torneoArreglado = new Torneo(Idioma.ESPAÑOL, Dificultad.FACIL);
+		this.torneoArreglado = new Torneo(Idioma.ESPANIOL, Dificultad.FACIL);
 		this.torneoArreglado.perderTurno();
 		this.torneoArreglado.desafiarAI("hola");
 	}
@@ -28,8 +37,6 @@ public class TorneoTest {
 			} catch (NoHayMasIntentosException | NoTieneChancesException | NoPuedeRepetirLetraException | NoPuedeJugarAISinoEsDesafiadaException e) {
 				System.out.print(e);
 			}
-			
-			
 		}
 	}
 

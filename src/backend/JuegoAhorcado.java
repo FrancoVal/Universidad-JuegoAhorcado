@@ -18,19 +18,14 @@ public class JuegoAhorcado {
 	public JuegoAhorcado(Idioma idioma, Dificultad dificultad, String palabra) {
 
 		this.crearCaracBasicas(idioma, dificultad);
-		
+
 		if (palabra != null) {
 			this.palabra = palabra;
 			this.crearAdivinanza();
 		} else {
 			this.crearAdivinanzaAlAzar();
 		}
-		
-		
-
 	}
-
-	
 
 	private void crearCaracBasicas(Idioma idioma, Dificultad dificultad) {
 
@@ -45,10 +40,9 @@ public class JuegoAhorcado {
 
 		Diccionario diccionario = new Diccionario(this.idioma, this.dificultad);
 		this.palabra = diccionario.elegirPalabraAlAzar();
-		
 
 	}
-	
+
 	private void crearAdivinanza() {
 
 		adivinanza = new Adivinanza(this.palabra);
@@ -64,9 +58,9 @@ public class JuegoAhorcado {
 		this.intentosFallidosRestantes -= 1;
 	}
 
-  public int cantidadDeIntentosRestantes() {
-    return this.intentosFallidosRestantes;
-  }
+	public int cantidadDeIntentosRestantes() {
+		return this.intentosFallidosRestantes;
+	}
 	// fin de INTENTOS
 
 	// ESTADO
@@ -90,9 +84,9 @@ public class JuegoAhorcado {
 		return this.adivinanza.obtenerLetrasDescubiertas();
 	}
 
-  public char[] verLetrasFallidasUtilizadas() {
-  return this.listadoLetrasFallidas;
-  }
+	public char[] verLetrasFallidasUtilizadas() {
+		return this.listadoLetrasFallidas;
+	}
 	// fin de ESTADO
 
 	// TURNO

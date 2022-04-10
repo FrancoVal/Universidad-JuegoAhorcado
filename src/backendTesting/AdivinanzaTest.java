@@ -1,9 +1,11 @@
-package backend;
+package backendTesting;
 
 import static org.junit.Assert.*;
 
 import org.junit.Before;
 import org.junit.Test;
+
+import backend.Adivinanza;
 
 public class AdivinanzaTest {
 	
