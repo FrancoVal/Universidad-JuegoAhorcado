@@ -40,12 +40,12 @@ public class JuegoAhorcado {
 
 		Diccionario diccionario = new Diccionario(this.idioma, this.dificultad);
 		this.palabra = diccionario.elegirPalabraAlAzar();
-		adivinanza = new Adivinanza(this.palabra);
+		this.adivinanza = new Adivinanza(this.palabra);
 	}
 
 	private void crearAdivinanza() {
 
-		adivinanza = new Adivinanza(this.palabra);
+		this.adivinanza = new Adivinanza(this.palabra);
 
 	}
 
