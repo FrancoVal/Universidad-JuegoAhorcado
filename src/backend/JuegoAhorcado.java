@@ -101,7 +101,7 @@ public class JuegoAhorcado {
 	private void operacionesDelTurno(char letra) {
 		if (!this.adivinanza.intentar(letra)) {
 			this.restarUnIntento();
-			this.listadoLetrasFallidas[this.dificultad.intentos() - this.intentosFallidosRestantes] = letra;
+			this.listadoLetrasFallidas[this.dificultad.intentos() - this.intentosFallidosRestantes - 1] = letra;
 		}
 	}
 	// fin de TURNO
