@@ -26,24 +26,23 @@ import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 
-import backend.Torneo;
-import backend.JuegoAhorcado;
-import backend.Adivinanza;
-import backend.Diccionario;
-import backend.Idioma;
 import backend.Dificultad;
+import backend.Idioma;
+import backend.Modo;
 import controller.ControllerAhorcado;
 
 public class Frontend {
 
 	private JFrame frameInicial;
+	private JFrame frameModo;
 	private JFrame frameIdioma;
 	private JFrame frameDificultad;
 	private JFrame frameJuego;
 	private JPanel panelJuego;
 
 	ControllerAhorcado controlador = new ControllerAhorcado();
-	Torneo torneo;
+	
+	Modo modoAJugar;
 	Idioma idiomaAUtilizar;
 	Dificultad dificultadAUtilizar;
 
@@ -69,10 +68,10 @@ public class Frontend {
 	}
 
 	private void initialize() {
-		panelInicial();
+		frameInicial();
 	}
 
-	private JFrame panelInicial() {
+	private JFrame frameInicial() {
 		frameInicial = new JFrame();
 		fondoDePantalla(frameInicial);
 		frameInicial.setTitle("Ahorcado 2.0");
@@ -120,7 +119,45 @@ public class Frontend {
 		return frameInicial;
 	}
 
-	private JFrame panelIdioma() {
+	private JFrame frameModo() {
+		frameModo = new JFrame();
+		fondoDePantalla(frameModo);
+		frameModo.setTitle("Ahorcado 2.0");
+		frameModo.setBounds(100, 100, 450, 300);
+		frameModo.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frameModo.getContentPane().setLayout(null);
+
+		JButton botonInicial = new JButton("Modo normal");
+		botonInicial.setBounds(169, 56, 100, 23);
+		frameModo.getContentPane().add(botonInicial);
+		botonInicial.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				accionBoton("Modo normal");
+			}
+		});
+
+		JButton botonMedio = new JButton("Modo torneo");
+		botonMedio.setBounds(169, 90, 100, 23);
+		frameModo.getContentPane().add(botonMedio);
+		botonMedio.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				accionBoton("Modo torneo");
+			}
+		});
+
+		JButton botonVuelta = new JButton("Volver al menu");
+		botonVuelta.setBounds(10, 227, 114, 23);
+		frameModo.getContentPane().add(botonVuelta);
+		botonVuelta.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				accionBoton("Volver al menu");
+			}
+		});
+
+		return frameModo;
+	}
+
+	private JFrame frameIdioma() {
 		frameIdioma = new JFrame();
 		fondoDePantalla(frameIdioma);
 		frameIdioma.setTitle("Ahorcado 2.0");
@@ -167,7 +204,7 @@ public class Frontend {
 		return frameIdioma;
 	}
 
-	private JFrame panelDificultad() {
+	private JFrame frameDificultad() {
 		frameDificultad = new JFrame();
 		fondoDePantalla(frameDificultad);
 		frameDificultad.setTitle("Ahorcado 2.0");
@@ -216,7 +253,7 @@ public class Frontend {
 
 	private JFrame frameJuego() {
 
-		controlador.crearJuego(idiomaAUtilizar, dificultadAUtilizar);
+		controlador.crearJuego(idiomaAUtilizar, dificultadAUtilizar, modoAJugar);
 		frameJuego = new JFrame();
 		frameJuego.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frameJuego.setBounds(100, 100, 800, 600);
@@ -281,6 +318,8 @@ public class Frontend {
 		frameInicial.setVisible(true);
 		if (frameIdioma.isActive()) {
 			frameIdioma.setVisible(false);
+		} else if (frameModo.isActive()) {
+			frameModo.setVisible(false);
 		} else if (frameDificultad.isActive()) {
 			frameDificultad.setVisible(false);
 		} else {
@@ -303,14 +342,28 @@ public class Frontend {
 			break;
 		}
 		case "Comenzar juego": {
-			panelIdioma();
-			frameIdioma.setVisible(true);
+			frameModo();
+			frameModo.setVisible(true);
 			frameInicial.setVisible(false);
+			break;
+		}
+		case "Modo normal": {
+			modoAJugar = Modo.NORMAL;
+			frameIdioma();
+			frameIdioma.setVisible(true);
+			frameModo.setVisible(false);
+			break;
+		}
+		case "Modo torneo": {
+			modoAJugar = Modo.TORNEO;
+			frameIdioma();
+			frameIdioma.setVisible(true);
+			frameModo.setVisible(false);
 			break;
 		}
 		case "Español": {
 			idiomaAUtilizar = Idioma.ESPANIOL;
-			panelDificultad();
+			frameDificultad();
 			frameDificultad.setVisible(true);
 			frameIdioma.setVisible(false);
 
@@ -318,7 +371,7 @@ public class Frontend {
 		}
 		case "Ingles": {
 			idiomaAUtilizar = Idioma.INGLES;
-			panelDificultad();
+			frameDificultad();
 			frameDificultad.setVisible(true);
 			frameIdioma.setVisible(false);
 
@@ -326,7 +379,7 @@ public class Frontend {
 		}
 		case "Frances": {
 			idiomaAUtilizar = Idioma.FRANCES;
-			panelDificultad();
+			frameDificultad();
 			frameDificultad.setVisible(true);
 			frameIdioma.setVisible(false);
 			break;
@@ -388,7 +441,7 @@ public class Frontend {
 			break;
 		}
 	}
-	
+
 	public void mostrarInstrucciones() {
 		JOptionPane.showMessageDialog(frameInicial,
 				"A continuacion vas a poder seleccionar entre distintas opciones:\nModo de juego\nIdioma\nDificultad");
