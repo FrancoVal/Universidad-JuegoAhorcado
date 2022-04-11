@@ -20,7 +20,7 @@ public class JuegoAhorcado {
 		this.crearCaracBasicas(idioma, dificultad);
 
 		if (palabra != null) {
-			this.palabra = palabra; 
+			this.palabra = palabra;
 			this.crearAdivinanza();
 		} else {
 			this.crearAdivinanzaAlAzar();
@@ -109,15 +109,19 @@ public class JuegoAhorcado {
 	public String getPalabra() {
 		String palabra = "";
 		StringBuilder sb = new StringBuilder();
-		for(char c : verPalabraConstruida()) {
+		for (char c : verPalabraConstruida()) {
 			sb.append(c);
 			palabra = sb.toString();
 		}
 		return palabra;
 	}
-	
+
 	public int getTurnos() {
 		return this.intentosFallidosRestantes;
+	}
+
+	public void setTurnos(Dificultad dificultad) {
+		this.intentosFallidosRestantes = dificultad.intentos();
 	}
 
 }

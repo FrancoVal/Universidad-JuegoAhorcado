@@ -1,6 +1,5 @@
 package controller;
 
-import backend.Adivinanza;
 import backend.Dificultad;
 import backend.EstadoJuego;
 import backend.Idioma;
@@ -21,25 +20,21 @@ public class ControllerAhorcado {
 		}
 	}
 
-	public int cantidadIntentos() {
-		return modoNormal.cantidadDeIntentosRestantes();
-	}
-
 	public String getPalabra() {
 		return modoNormal.getPalabra();
 	}
-	
+
 	public String getIntentosRestantes() {
-		int intentos =	modoNormal.cantidadDeIntentosRestantes();
-		String labelIntentos = Integer.toString(intentos);	
+		int intentos = modoNormal.cantidadDeIntentosRestantes();
+		String labelIntentos = Integer.toString(intentos);
 		return labelIntentos;
 	}
-	
+
 	public boolean getEstado() {
 		return modoNormal.seguimosJugando();
 	}
-	
-	public void intentar(String tecla){
+
+	public void intentar(String tecla) {
 		char c = tecla.charAt(0);
 		try {
 			modoNormal.turno(c);
@@ -48,7 +43,7 @@ public class ControllerAhorcado {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public boolean verificarVictoria() {
 		return (modoNormal.estado().equals(EstadoJuego.GANADO)) ? true : false;
 	}
@@ -58,14 +53,13 @@ public class ControllerAhorcado {
 		getPalabra();
 		getEstado();
 	}
-	
+
 	public int getTurnos() {
 		return modoNormal.getTurnos();
 	}
 
-//	public char[] verPalabraConstruida() {
-//		System.out.println(modoNormal.verPalabraConstruida());
-//		return modoNormal.verPalabraConstruida();
-//	}
+	public void reiniciarValorTurnos(Dificultad dificultad) {
+		modoNormal.setTurnos(dificultad);
+	}
 
 }

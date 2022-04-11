@@ -39,7 +39,7 @@ public class Frontend {
 	private JFrame frameDificultad;
 	private JFrame frameJuego;
 	private JPanel panelJuego;
-	
+
 	private JLabel labelTurnos;
 	private JLabel palabra;
 
@@ -81,6 +81,7 @@ public class Frontend {
 		frameInicial.setBounds(100, 100, 450, 300);
 		frameInicial.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frameInicial.getContentPane().setLayout(null);
+		frameInicial.setLocationRelativeTo(null);
 
 		fondoDePantalla(frameInicial);
 
@@ -129,6 +130,7 @@ public class Frontend {
 		frameModo.setBounds(100, 100, 450, 300);
 		frameModo.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frameModo.getContentPane().setLayout(null);
+		frameModo.setLocationRelativeTo(null);
 
 		JButton botonInicial = new JButton("Modo normal");
 		botonInicial.setBounds(169, 56, 100, 23);
@@ -167,6 +169,7 @@ public class Frontend {
 		frameIdioma.getContentPane().setLayout(null);
 		frameIdioma.setBounds(100, 100, 450, 300);
 		frameIdioma.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frameIdioma.setLocationRelativeTo(null);
 
 		JButton botonEspañol = new JButton("Español");
 		botonEspañol.setBounds(169, 56, 89, 23);
@@ -214,6 +217,7 @@ public class Frontend {
 		frameDificultad.getContentPane().setLayout(null);
 		frameDificultad.setBounds(100, 100, 450, 300);
 		frameDificultad.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frameDificultad.setLocationRelativeTo(null);
 
 		JButton botonInicial = new JButton("Inicial");
 		botonInicial.setBounds(169, 56, 89, 23);
@@ -261,8 +265,8 @@ public class Frontend {
 		frameJuego.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frameJuego.setBounds(100, 100, 800, 600);
 		frameJuego.setLayout(new FlowLayout());
+		frameJuego.setLocationRelativeTo(null);
 
-		
 		panelJuego = new JPanel();
 		panelJuego.setBorder(new EmptyBorder(5, 5, 5, 5));
 
@@ -273,7 +277,7 @@ public class Frontend {
 		this.palabra = new JLabel(controlador.getPalabra());
 		this.palabra.setHorizontalAlignment(JLabel.CENTER);
 		this.palabra.setForeground(Color.BLACK);
-		this.palabra.setFont(new Font("Serif", Font.PLAIN,35));
+		this.palabra.setFont(new Font("Serif", Font.PLAIN, 35));
 
 		JPanel panel = new JPanel();
 		frameJuego.add(panel, BorderLayout.SOUTH);
@@ -289,11 +293,29 @@ public class Frontend {
 		JMenuBar menuBar = new JMenuBar();
 		frameJuego.setJMenuBar(menuBar);
 
+		JMenuItem itemMusicaIniciar = new JMenuItem("\u25B6");
+		itemMusicaIniciar.setBounds(393, 0, 43, 23);
+		menuBar.add(itemMusicaIniciar);
+		itemMusicaIniciar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				accionBoton("Iniciar Musica");
+			}
+		});
+
+		JMenuItem itemMusicaDetener = new JMenuItem("\u23F8");
+		itemMusicaDetener.setBounds(351, 0, 43, 23);
+		menuBar.add(itemMusicaDetener);
+		itemMusicaDetener.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				accionBoton("Detener Musica");
+			}
+		});
+		
 		JMenuItem itemRendirse = new JMenuItem("Rendirse");
 		menuBar.add(itemRendirse);
 		itemRendirse.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				panelesFinales("derrota");
+				panelesFinales("Derrota");
 			}
 		});
 
@@ -301,7 +323,7 @@ public class Frontend {
 		menuBar.add(itemRegresoMenu);
 		itemRegresoMenu.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				volverAlMenu();
+				accionBoton("Volver al menu");
 			}
 		});
 
@@ -339,25 +361,24 @@ public class Frontend {
 	}
 
 	private void actualizarPantalla() {
-		
+
 		this.labelTurnos.setText("Turnos: " + String.valueOf(controlador.getTurnos()));
 		this.palabra.setText(controlador.getPalabra());
-		
-		
+
 		this.panelJuego.validate();
 		this.panelJuego.repaint();
-		
+
 		controlador.actualizarPantalla();
 		if (controlador.verificarVictoria()) {
-			panelesFinales("victoria");
+			panelesFinales("Victoria");
 		} else if (!controlador.getEstado()) {
-			panelesFinales("derrota");
+			panelesFinales("Derrota");
 		}
 	}
 
 	private void accionBotonTeclado(String tecla) {
 		if (controlador.getEstado()) {
-			
+
 			switch (tecla) {
 			case "A": {
 				controlador.intentar(tecla);
@@ -470,17 +491,18 @@ public class Frontend {
 			}
 			actualizarPantalla();
 		} else {
-			panelesFinales("derrota");
+			panelesFinales("Derrota");
 		}
 
 	}
 
 	private void volverAlMenu() {
 		frameInicial.setVisible(true);
-		if (frameIdioma.isActive()) {
-			frameIdioma.setVisible(false);
-		} else if (frameModo.isActive()) {
+
+		if (frameModo.isActive()) {
 			frameModo.setVisible(false);
+		} else if (frameIdioma.isActive()) {
+			frameIdioma.setVisible(false);
 		} else if (frameDificultad.isActive()) {
 			frameDificultad.setVisible(false);
 		} else {
@@ -489,6 +511,9 @@ public class Frontend {
 	}
 
 	private void reiniciarJuego() {
+		controlador.reiniciarValorTurnos(this.dificultadAUtilizar);
+		this.labelTurnos.setText("Turnos: " + String.valueOf(controlador.getTurnos()));
+		this.palabra.setText(controlador.getPalabra());
 		frameJuego();
 	}
 
@@ -581,7 +606,7 @@ public class Frontend {
 		int resultadoFinal;
 		String[] buttons = { "Reiniciar", "Volver al menu", "Salir" };
 		switch (condicion) {
-		case "victoria":
+		case "Victoria":
 			resultadoFinal = JOptionPane.showOptionDialog(null, "!Felidades, ganaste!", "!Victoria!",
 					JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null, buttons, null);
 			if (resultadoFinal == JOptionPane.YES_OPTION) {
@@ -592,7 +617,7 @@ public class Frontend {
 				System.exit(0);
 			}
 			break;
-		case "derrota":
+		case "Derrota":
 			resultadoFinal = JOptionPane.showOptionDialog(null, "!Mejor suerte la proxima!", "Derrota...",
 					JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null, buttons, null);
 			if (resultadoFinal == JOptionPane.YES_OPTION) {
