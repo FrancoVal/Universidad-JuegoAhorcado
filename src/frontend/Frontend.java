@@ -39,6 +39,9 @@ public class Frontend {
 	private JFrame frameDificultad;
 	private JFrame frameJuego;
 	private JPanel panelJuego;
+	
+	private JLabel labelTurnos;
+	private JLabel palabra;
 
 	ControllerAhorcado controlador = new ControllerAhorcado();
 
@@ -267,10 +270,10 @@ public class Frontend {
 		panelJuego.setLayout(new BorderLayout(0, 0));
 		panelJuego.setForeground(Color.WHITE);
 
-		JLabel palabra = new JLabel(controlador.getPalabra());
-		palabra.setHorizontalAlignment(JLabel.CENTER);
-		palabra.setForeground(Color.BLACK);
-		palabra.setFont(new Font("Serif", Font.PLAIN,35));
+		this.palabra = new JLabel(controlador.getPalabra());
+		this.palabra.setHorizontalAlignment(JLabel.CENTER);
+		this.palabra.setForeground(Color.BLACK);
+		this.palabra.setFont(new Font("Serif", Font.PLAIN,35));
 
 		JPanel panel = new JPanel();
 		frameJuego.add(panel, BorderLayout.SOUTH);
@@ -302,8 +305,8 @@ public class Frontend {
 			}
 		});
 
-		JLabel labelTurnos = new JLabel("Turnos: " + String.valueOf(controlador.getTurnos()));
-		menuBar.add(labelTurnos);
+		this.labelTurnos = new JLabel("Turnos: " + String.valueOf(controlador.getTurnos()));
+		menuBar.add(this.labelTurnos);
 
 		return frameJuego;
 	}
@@ -336,6 +339,14 @@ public class Frontend {
 	}
 
 	private void actualizarPantalla() {
+		
+		this.labelTurnos.setText("Turnos: " + String.valueOf(controlador.getTurnos()));
+		this.palabra.setText(controlador.getPalabra());
+		
+		
+		this.panelJuego.validate();
+		this.panelJuego.repaint();
+		
 		controlador.actualizarPantalla();
 		if (controlador.verificarVictoria()) {
 			panelesFinales("victoria");
@@ -346,7 +357,7 @@ public class Frontend {
 
 	private void accionBotonTeclado(String tecla) {
 		if (controlador.getEstado()) {
-			actualizarPantalla();
+			
 			switch (tecla) {
 			case "A": {
 				controlador.intentar(tecla);
@@ -457,6 +468,7 @@ public class Frontend {
 				break;
 			}
 			}
+			actualizarPantalla();
 		} else {
 			panelesFinales("derrota");
 		}

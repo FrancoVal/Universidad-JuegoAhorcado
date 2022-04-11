@@ -10,7 +10,7 @@ import backend.Torneo;
 
 public class ControllerAhorcado {
 
-	JuegoAhorcado modoNormal;
+	public JuegoAhorcado modoNormal;
 	Torneo modoTorneo;
 
 	public void crearJuego(Idioma idioma, Dificultad dificultad, Modo modo) {
