@@ -1,8 +1,9 @@
 package frontend;
 
 import java.awt.BorderLayout;
-import java.awt.Component;
+import java.awt.Color;
 import java.awt.EventQueue;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridLayout;
@@ -15,13 +16,13 @@ import javax.imageio.ImageIO;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
-import javax.swing.Box;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 
@@ -256,13 +257,20 @@ public class Frontend {
 		frameJuego = new JFrame();
 		frameJuego.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frameJuego.setBounds(100, 100, 800, 600);
+		frameJuego.setLayout(new FlowLayout());
 
+		
 		panelJuego = new JPanel();
 		panelJuego.setBorder(new EmptyBorder(5, 5, 5, 5));
+
 		frameJuego.setContentPane(panelJuego);
 		panelJuego.setLayout(new BorderLayout(0, 0));
+		panelJuego.setForeground(Color.WHITE);
 
 		JLabel palabra = new JLabel(controlador.getPalabra());
+		palabra.setHorizontalAlignment(JLabel.CENTER);
+		palabra.setForeground(Color.BLACK);
+		palabra.setFont(new Font("Serif", Font.PLAIN,35));
 
 		JPanel panel = new JPanel();
 		frameJuego.add(panel, BorderLayout.SOUTH);
@@ -275,39 +283,32 @@ public class Frontend {
 
 		panelJuego.add(palabra);
 
-		JLabel etiquetaTextoTiempoRestante = new JLabel("Tiempo restante:");
-		panelCronometro.add(etiquetaTextoTiempoRestante);
-		etiquetaTextoTiempoRestante.setHorizontalAlignment(SwingConstants.TRAILING);
-		etiquetaTextoTiempoRestante.setFont(new Font("Dialog", Font.PLAIN, 10));
+		JMenuBar menuBar = new JMenuBar();
+		frameJuego.setJMenuBar(menuBar);
 
-		JLabel etiquetaIntentosRestantes = new JLabel(controlador.getIntentosRestantes());
-		panelCronometro.add(etiquetaIntentosRestantes);
-		etiquetaIntentosRestantes.setFont(new Font("Dialog", Font.BOLD, 14));
-		etiquetaIntentosRestantes.setHorizontalAlignment(SwingConstants.CENTER);
-
-		Box verticalBox = Box.createVerticalBox();
-		panelCronometro.add(verticalBox);
-
-		Component margenInferiorCentralIzquierdo = Box.createHorizontalGlue();
-		panel.add(margenInferiorCentralIzquierdo);
-
-		Component margenInferiorCentralDerecho = Box.createHorizontalGlue();
-		panel.add(margenInferiorCentralDerecho);
-
-		JButton botonRendirse = new JButton("Rendirse");
-		panel.add(botonRendirse);
-		botonRendirse.addActionListener(new ActionListener() {
+		JMenuItem itemRendirse = new JMenuItem("Rendirse");
+		menuBar.add(itemRendirse);
+		itemRendirse.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				panelesFinales("derrota");
 			}
 		});
 
-		Component margenInferiorDerecho = Box.createHorizontalGlue();
-		panel.add(margenInferiorDerecho);
+		JMenuItem itemRegresoMenu = new JMenuItem("Volver al menu");
+		menuBar.add(itemRegresoMenu);
+		itemRegresoMenu.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				volverAlMenu();
+			}
+		});
+
+		JLabel labelTurnos = new JLabel("Turnos: " + String.valueOf(controlador.getTurnos()));
+		menuBar.add(labelTurnos);
+
 		return frameJuego;
 	}
 
-	public void crearBotones(JPanel panel) {
+	private void crearBotones(JPanel panel) {
 
 		JButton[] botones = new JButton[26];
 		String[] letras = { "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R",
@@ -322,6 +323,7 @@ public class Frontend {
 				public void actionPerformed(ActionEvent e) {
 					if (e.getSource() instanceof JButton) {
 						String boton = e.getActionCommand();
+						frameJuego.repaint();
 						accionBotonTeclado(boton);
 					}
 				}
@@ -333,8 +335,18 @@ public class Frontend {
 
 	}
 
-	protected void accionBotonTeclado(String tecla) {
+	private void actualizarPantalla() {
+		controlador.actualizarPantalla();
+		if (controlador.verificarVictoria()) {
+			panelesFinales("victoria");
+		} else if (!controlador.getEstado()) {
+			panelesFinales("derrota");
+		}
+	}
+
+	private void accionBotonTeclado(String tecla) {
 		if (controlador.getEstado()) {
+			actualizarPantalla();
 			switch (tecla) {
 			case "A": {
 				controlador.intentar(tecla);
@@ -464,6 +476,10 @@ public class Frontend {
 		}
 	}
 
+	private void reiniciarJuego() {
+		frameJuego();
+	}
+
 	private void accionBoton(String boton) {
 		switch (boton) {
 		case "Iniciar Musica": {
@@ -549,15 +565,15 @@ public class Frontend {
 		}
 	}
 
-	public void panelesFinales(String condicion) {
+	private void panelesFinales(String condicion) {
 		int resultadoFinal;
-		String[] buttons = { "Volver al menu", "Salir" };
+		String[] buttons = { "Reiniciar", "Volver al menu", "Salir" };
 		switch (condicion) {
 		case "victoria":
 			resultadoFinal = JOptionPane.showOptionDialog(null, "!Felidades, ganaste!", "!Victoria!",
 					JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null, buttons, null);
 			if (resultadoFinal == JOptionPane.YES_OPTION) {
-				volverAlMenu();
+				reiniciarJuego();
 			} else if (resultadoFinal == JOptionPane.NO_OPTION) {
 				volverAlMenu();
 			} else {
@@ -568,7 +584,7 @@ public class Frontend {
 			resultadoFinal = JOptionPane.showOptionDialog(null, "!Mejor suerte la proxima!", "Derrota...",
 					JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null, buttons, null);
 			if (resultadoFinal == JOptionPane.YES_OPTION) {
-				volverAlMenu();
+				reiniciarJuego();
 			} else if (resultadoFinal == JOptionPane.NO_OPTION) {
 				volverAlMenu();
 			} else {
@@ -578,7 +594,7 @@ public class Frontend {
 		}
 	}
 
-	public void mostrarInstrucciones() {
+	private void mostrarInstrucciones() {
 		JOptionPane.showMessageDialog(frameInicial,
 				"A continuacion vas a poder seleccionar entre distintas opciones:\nModo de juego\nIdioma\nDificultad");
 		JOptionPane.showMessageDialog(frameInicial,
@@ -589,7 +605,7 @@ public class Frontend {
 				"Recordá que en la dificultad:\nInicial: 5 intentos\nMedio: 3 intentos\nDificil: 1 intento\nSuerte");
 	}
 
-	public void estadoMusica(boolean estado) {
+	private void estadoMusica(boolean estado) {
 		try {
 			AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File("src/data/columbia.wav"));
 			Clip clip = AudioSystem.getClip();

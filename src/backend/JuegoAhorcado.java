@@ -55,7 +55,7 @@ public class JuegoAhorcado {
 	}
 
 	private void restarUnIntento() {
-		this.intentosFallidosRestantes -= 1;
+		this.intentosFallidosRestantes--;
 	}
 
 	public int cantidadDeIntentosRestantes() {
@@ -114,6 +114,10 @@ public class JuegoAhorcado {
 			palabra = sb.toString();
 		}
 		return palabra;
+	}
+	
+	public int getTurnos() {
+		return this.intentosFallidosRestantes;
 	}
 
 }

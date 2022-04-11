@@ -1,9 +1,9 @@
 package backend;
 
 public enum Dificultad {
-	FACIL("Facil", 3),
+	FACIL("Facil", 5),
 	MEDIO("Medio", 3),
-	DIFICIL("Dificil", 3);
+	DIFICIL("Dificil", 1);
 	
 	
 private String nombre;

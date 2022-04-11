@@ -2,6 +2,7 @@ package controller;
 
 import backend.Adivinanza;
 import backend.Dificultad;
+import backend.EstadoJuego;
 import backend.Idioma;
 import backend.JuegoAhorcado;
 import backend.Modo;
@@ -46,6 +47,20 @@ public class ControllerAhorcado {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	
+	public boolean verificarVictoria() {
+		return (modoNormal.estado().equals(EstadoJuego.GANADO)) ? true : false;
+	}
+
+	public void actualizarPantalla() {
+		getIntentosRestantes();
+		getPalabra();
+		getEstado();
+	}
+	
+	public int getTurnos() {
+		return modoNormal.getTurnos();
 	}
 
 //	public char[] verPalabraConstruida() {
