@@ -10,7 +10,7 @@ import backend.Torneo;
 public class ControllerAhorcado {
 
 	public JuegoAhorcado modoNormal;
-	Torneo modoTorneo;
+	public Torneo modoTorneo;
 
 	public void crearJuego(Idioma idioma, Dificultad dificultad, Modo modo) {
 		if (modo.equals(Modo.NORMAL)) {
@@ -61,11 +61,10 @@ public class ControllerAhorcado {
 	public void reiniciarValorTurnos(Dificultad dificultad) {
 		modoNormal.setTurnos(dificultad);
 	}
-	
+
 	public String getLetrasIncorrectas() {
 		String letrasIncorrectas = String.valueOf(modoNormal.verLetrasFallidasUtilizadas());
 		return letrasIncorrectas;
 	}
-	
 
 }

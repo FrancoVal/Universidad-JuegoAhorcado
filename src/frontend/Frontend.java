@@ -2,7 +2,6 @@ package frontend;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.FlowLayout;
 import java.awt.Font;
@@ -39,6 +38,7 @@ public class Frontend {
 	private JFrame frameIdioma;
 	private JFrame frameDificultad;
 	private JFrame frameJuego;
+
 	private JPanel panelJuego;
 
 	private JLabel labelTurnos;
@@ -311,7 +311,7 @@ public class Frontend {
 				accionBoton("Detener Musica");
 			}
 		});
-		
+
 		JMenuItem itemRendirse = new JMenuItem("Rendirse");
 		menuBar.add(itemRendirse);
 		itemRendirse.addActionListener(new ActionListener() {
@@ -327,7 +327,7 @@ public class Frontend {
 				accionBoton("Volver al menu");
 			}
 		});
-		
+
 		JButton itemIncorrectas = new JButton("Ver intentos");
 		panel.add(itemIncorrectas);
 		itemIncorrectas.addActionListener(new ActionListener() {
@@ -377,7 +377,6 @@ public class Frontend {
 		this.panelJuego.validate();
 		this.panelJuego.repaint();
 
-		controlador.actualizarPantalla();
 		if (controlador.verificarVictoria()) {
 			panelesFinales("Victoria");
 		} else if (!controlador.getEstado()) {
@@ -605,7 +604,7 @@ public class Frontend {
 			break;
 		}
 		case "Ver incorrectas": {
-			JOptionPane.showMessageDialog(frameJuego,controlador.getLetrasIncorrectas());
+			JOptionPane.showMessageDialog(frameJuego, controlador.getLetrasIncorrectas());
 			break;
 		}
 		case "Volver al menu": {
