@@ -280,10 +280,10 @@ public class Frontend {
 		etiquetaTextoTiempoRestante.setHorizontalAlignment(SwingConstants.TRAILING);
 		etiquetaTextoTiempoRestante.setFont(new Font("Dialog", Font.PLAIN, 10));
 
-		JLabel etiquetaCronometroTiempoRestante = new JLabel();
-		panelCronometro.add(etiquetaCronometroTiempoRestante);
-		etiquetaCronometroTiempoRestante.setFont(new Font("Dialog", Font.BOLD, 14));
-		etiquetaCronometroTiempoRestante.setHorizontalAlignment(SwingConstants.CENTER);
+		JLabel etiquetaIntentosRestantes = new JLabel(controlador.getIntentosRestantes());
+		panelCronometro.add(etiquetaIntentosRestantes);
+		etiquetaIntentosRestantes.setFont(new Font("Dialog", Font.BOLD, 14));
+		etiquetaIntentosRestantes.setHorizontalAlignment(SwingConstants.CENTER);
 
 		Box verticalBox = Box.createVerticalBox();
 		panelCronometro.add(verticalBox);
@@ -334,115 +334,119 @@ public class Frontend {
 	}
 
 	protected void accionBotonTeclado(String tecla) {
-		switch (tecla) {
-		case "A": {
-			controlador.intentar(tecla);
-			break;
-		}
-		case "B": {
-			controlador.intentar(tecla);
-			break;
-		}
-		case "C": {
-			controlador.intentar(tecla);
-			break;
-		}
-		case "D": {
-			controlador.intentar(tecla);
-			break;
-		}
-		case "E": {
-			controlador.intentar(tecla);
-			break;
-		}
-		case "F": {
-			controlador.intentar(tecla);
-			break;
-		}
-		case "G": {
-			controlador.intentar(tecla);
-			break;
-		}
-		case "H": {
-			controlador.intentar(tecla);
-			break;
-		}
-		case "I": {
-			controlador.intentar(tecla);
-			break;
-		}
-		case "J": {
-			controlador.intentar(tecla);
-			break;
-		}
-		case "K": {
-			controlador.intentar(tecla);
-			break;
-		}
-		case "L": {
-			controlador.intentar(tecla);
-			break;
-		}
-		case "M": {
-			controlador.intentar(tecla);
-			break;
-		}
-		case "N": {
-			controlador.intentar(tecla);
-			break;
-		}
-		case "Ñ": {
-			controlador.intentar(tecla);
-			break;
-		}
-		case "O": {
-			controlador.intentar(tecla);
-			break;
-		}
-		case "P": {
-			controlador.intentar(tecla);
-			break;
-		}
-		case "Q": {
-			controlador.intentar(tecla);
-			break;
-		}
-		case "R": {
-			controlador.intentar(tecla);
-			break;
-		}
-		case "S": {
-			controlador.intentar(tecla);
-			break;
-		}
-		case "T": {
-			controlador.intentar(tecla);
-			break;
-		}
-		case "U": {
-			controlador.intentar(tecla);
-			break;
-		}
-		case "V": {
-			controlador.intentar(tecla);
-			break;
-		}
-		case "W": {
-			controlador.intentar(tecla);
-			break;
-		}
-		case "X": {
-			controlador.intentar(tecla);
-			break;
-		}
-		case "Y": {
-			controlador.intentar(tecla);
-			break;
-		}
-		case "Z": {
-			controlador.intentar(tecla);
-			break;
-		}
+		if (controlador.getEstado()) {
+			switch (tecla) {
+			case "A": {
+				controlador.intentar(tecla);
+				break;
+			}
+			case "B": {
+				controlador.intentar(tecla);
+				break;
+			}
+			case "C": {
+				controlador.intentar(tecla);
+				break;
+			}
+			case "D": {
+				controlador.intentar(tecla);
+				break;
+			}
+			case "E": {
+				controlador.intentar(tecla);
+				break;
+			}
+			case "F": {
+				controlador.intentar(tecla);
+				break;
+			}
+			case "G": {
+				controlador.intentar(tecla);
+				break;
+			}
+			case "H": {
+				controlador.intentar(tecla);
+				break;
+			}
+			case "I": {
+				controlador.intentar(tecla);
+				break;
+			}
+			case "J": {
+				controlador.intentar(tecla);
+				break;
+			}
+			case "K": {
+				controlador.intentar(tecla);
+				break;
+			}
+			case "L": {
+				controlador.intentar(tecla);
+				break;
+			}
+			case "M": {
+				controlador.intentar(tecla);
+				break;
+			}
+			case "N": {
+				controlador.intentar(tecla);
+				break;
+			}
+			case "Ñ": {
+				controlador.intentar(tecla);
+				break;
+			}
+			case "O": {
+				controlador.intentar(tecla);
+				break;
+			}
+			case "P": {
+				controlador.intentar(tecla);
+				break;
+			}
+			case "Q": {
+				controlador.intentar(tecla);
+				break;
+			}
+			case "R": {
+				controlador.intentar(tecla);
+				break;
+			}
+			case "S": {
+				controlador.intentar(tecla);
+				break;
+			}
+			case "T": {
+				controlador.intentar(tecla);
+				break;
+			}
+			case "U": {
+				controlador.intentar(tecla);
+				break;
+			}
+			case "V": {
+				controlador.intentar(tecla);
+				break;
+			}
+			case "W": {
+				controlador.intentar(tecla);
+				break;
+			}
+			case "X": {
+				controlador.intentar(tecla);
+				break;
+			}
+			case "Y": {
+				controlador.intentar(tecla);
+				break;
+			}
+			case "Z": {
+				controlador.intentar(tecla);
+				break;
+			}
+			}
+		} else {
+			panelesFinales("derrota");
 		}
 
 	}

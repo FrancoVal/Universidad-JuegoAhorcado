@@ -28,8 +28,10 @@ public class ControllerAhorcado {
 		return modoNormal.getPalabra();
 	}
 	
-	public int getIntentosRestantes() {
-		return modoNormal.cantidadDeIntentosRestantes();
+	public String getIntentosRestantes() {
+		int intentos =	modoNormal.cantidadDeIntentosRestantes();
+		String labelIntentos = Integer.toString(intentos);	
+		return labelIntentos;
 	}
 	
 	public boolean getEstado() {
