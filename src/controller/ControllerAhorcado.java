@@ -8,13 +8,21 @@ import backend.Torneo;
 
 public class ControllerAhorcado {
 	
+	JuegoAhorcado modoNormal;
+	Torneo modoTorneo;
+	
 	
 	public void crearJuego(Idioma idioma, Dificultad dificultad, Modo modo) {
 		if(modo.equals(Modo.NORMAL)) {
-			JuegoAhorcado modoNormal = new JuegoAhorcado(idioma, dificultad);
+			modoNormal = new JuegoAhorcado(idioma, dificultad);
 		}else {
-			Torneo modoTorneo = new Torneo(idioma,dificultad);
+			modoTorneo = new Torneo(idioma,dificultad);
 		}
 	}
+	
+//	public char[] verPalabraConstruida() {
+//		System.out.println(modoNormal.verPalabraConstruida());
+//		return modoNormal.verPalabraConstruida();
+//	}
 
 }

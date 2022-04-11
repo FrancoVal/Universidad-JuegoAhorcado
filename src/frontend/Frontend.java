@@ -310,6 +310,8 @@ public class Frontend {
 
 		Component margenInferiorDerecho = Box.createHorizontalGlue();
 		panel.add(margenInferiorDerecho);
+		
+//		controlador.verPalabraConstruida();
 
 		return frameJuego;
 	}
