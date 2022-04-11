@@ -231,5 +231,19 @@ public class Torneo {
 			this.puntosIA++;
 		}
 	}
+	
+	public int cantidadDeIntentosRestantesJugadorActual() {
+		return this.ahorcado.cantidadDeIntentosRestantes();
+	}
+	
+	public char[] verPalabraConstruidaPorJugadorActual() {
+		return this.ahorcado.verPalabraConstruida();
+	}
+	
+	public char[] verLetrasFallidasPorJugadorActual() {
+		return this.ahorcado.verLetrasFallidasUtilizadas();
+	}
+	
+	
 
 }
