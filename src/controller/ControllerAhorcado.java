@@ -1,5 +1,6 @@
 package controller;
 
+import backend.Adivinanza;
 import backend.Dificultad;
 import backend.Idioma;
 import backend.JuegoAhorcado;
@@ -7,19 +8,44 @@ import backend.Modo;
 import backend.Torneo;
 
 public class ControllerAhorcado {
-	
+
 	JuegoAhorcado modoNormal;
 	Torneo modoTorneo;
-	
-	
+
 	public void crearJuego(Idioma idioma, Dificultad dificultad, Modo modo) {
-		if(modo.equals(Modo.NORMAL)) {
+		if (modo.equals(Modo.NORMAL)) {
 			modoNormal = new JuegoAhorcado(idioma, dificultad);
-		}else {
-			modoTorneo = new Torneo(idioma,dificultad);
+		} else {
+			modoTorneo = new Torneo(idioma, dificultad);
 		}
 	}
+
+	public int cantidadIntentos() {
+		return modoNormal.cantidadDeIntentosRestantes();
+	}
+
+	public String getPalabra() {
+		return modoNormal.getPalabra();
+	}
 	
+	public int getIntentosRestantes() {
+		return modoNormal.cantidadDeIntentosRestantes();
+	}
+	
+	public boolean getEstado() {
+		return modoNormal.seguimosJugando();
+	}
+	
+	public void intentar(String tecla){
+		char c = tecla.charAt(0);
+		try {
+			modoNormal.turno(c);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
 //	public char[] verPalabraConstruida() {
 //		System.out.println(modoNormal.verPalabraConstruida());
 //		return modoNormal.verPalabraConstruida();

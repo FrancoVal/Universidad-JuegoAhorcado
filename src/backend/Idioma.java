@@ -1,7 +1,7 @@
 package backend;
 
 public enum Idioma {
-	ESPANIOL ("EspaÃ±ol"), 
+	ESPANIOL ("Español"), 
 	INGLES ("Ingles"), 
 	FRANCES ("Frances");
 	

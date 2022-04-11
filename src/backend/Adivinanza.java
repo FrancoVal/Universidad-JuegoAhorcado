@@ -94,7 +94,7 @@ public class Adivinanza {
 			if (this.descubrimiento[i]) {
 				palabraParcial[i] = this.palabra[i];
 			} else {
-				palabraParcial[i] = ' ';
+				palabraParcial[i] = '*';
 			}
 
 		}

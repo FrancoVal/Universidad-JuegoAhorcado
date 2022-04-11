@@ -106,4 +106,14 @@ public class JuegoAhorcado {
 	}
 	// fin de TURNO
 
+	public String getPalabra() {
+		String palabra = "";
+		StringBuilder sb = new StringBuilder();
+		for(char c : verPalabraConstruida()) {
+			sb.append(c);
+			palabra = sb.toString();
+		}
+		return palabra;
+	}
+
 }

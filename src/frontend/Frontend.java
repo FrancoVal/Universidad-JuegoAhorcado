@@ -21,7 +21,6 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
@@ -41,7 +40,7 @@ public class Frontend {
 	private JPanel panelJuego;
 
 	ControllerAhorcado controlador = new ControllerAhorcado();
-	
+
 	Modo modoAJugar;
 	Idioma idiomaAUtilizar;
 	Dificultad dificultadAUtilizar;
@@ -263,24 +262,25 @@ public class Frontend {
 		frameJuego.setContentPane(panelJuego);
 		panelJuego.setLayout(new BorderLayout(0, 0));
 
+		JLabel palabra = new JLabel(controlador.getPalabra());
+
 		JPanel panel = new JPanel();
 		frameJuego.add(panel, BorderLayout.SOUTH);
 		panel.setLayout(new GridLayout(0, 8, 0, 0));
 
-		Component margenInferiorIzquierdo = Box.createHorizontalGlue();
-		margenInferiorIzquierdo.setEnabled(false);
-		margenInferiorIzquierdo.setFont(new Font("Dialog", Font.PLAIN, 16));
-		panel.add(margenInferiorIzquierdo);
+		crearBotones(panel);
 
 		JPanel panelCronometro = new JPanel();
 		panel.add(panelCronometro);
+
+		panelJuego.add(palabra);
 
 		JLabel etiquetaTextoTiempoRestante = new JLabel("Tiempo restante:");
 		panelCronometro.add(etiquetaTextoTiempoRestante);
 		etiquetaTextoTiempoRestante.setHorizontalAlignment(SwingConstants.TRAILING);
 		etiquetaTextoTiempoRestante.setFont(new Font("Dialog", Font.PLAIN, 10));
 
-		JLabel etiquetaCronometroTiempoRestante = new JLabel("15:00");
+		JLabel etiquetaCronometroTiempoRestante = new JLabel();
 		panelCronometro.add(etiquetaCronometroTiempoRestante);
 		etiquetaCronometroTiempoRestante.setFont(new Font("Dialog", Font.BOLD, 14));
 		etiquetaCronometroTiempoRestante.setHorizontalAlignment(SwingConstants.CENTER);
@@ -290,12 +290,6 @@ public class Frontend {
 
 		Component margenInferiorCentralIzquierdo = Box.createHorizontalGlue();
 		panel.add(margenInferiorCentralIzquierdo);
-
-		JTextField inputAdivinarLetra = new JTextField();
-		inputAdivinarLetra.setHorizontalAlignment(SwingConstants.CENTER);
-		inputAdivinarLetra.setFont(new Font("Dialog", Font.PLAIN, 36));
-		panel.add(inputAdivinarLetra);
-		inputAdivinarLetra.setColumns(10);
 
 		Component margenInferiorCentralDerecho = Box.createHorizontalGlue();
 		panel.add(margenInferiorCentralDerecho);
@@ -310,10 +304,147 @@ public class Frontend {
 
 		Component margenInferiorDerecho = Box.createHorizontalGlue();
 		panel.add(margenInferiorDerecho);
-		
-//		controlador.verPalabraConstruida();
-
 		return frameJuego;
+	}
+
+	public void crearBotones(JPanel panel) {
+
+		JButton[] botones = new JButton[26];
+		String[] letras = { "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R",
+				"S", "T", "U", "V", "W", "X", "Y", "Z" };
+
+		for (int i = 0; i < botones.length; i++) {
+			botones[i] = new JButton(letras[i]);
+			botones[i].setSize(40, 40);
+			botones[i].setActionCommand(letras[i]);
+			ActionListener listener = new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					if (e.getSource() instanceof JButton) {
+						String boton = e.getActionCommand();
+						accionBotonTeclado(boton);
+					}
+				}
+			};
+
+			botones[i].addActionListener(listener);
+			panel.add(botones[i]);
+		}
+
+	}
+
+	protected void accionBotonTeclado(String tecla) {
+		switch (tecla) {
+		case "A": {
+			controlador.intentar(tecla);
+			break;
+		}
+		case "B": {
+			controlador.intentar(tecla);
+			break;
+		}
+		case "C": {
+			controlador.intentar(tecla);
+			break;
+		}
+		case "D": {
+			controlador.intentar(tecla);
+			break;
+		}
+		case "E": {
+			controlador.intentar(tecla);
+			break;
+		}
+		case "F": {
+			controlador.intentar(tecla);
+			break;
+		}
+		case "G": {
+			controlador.intentar(tecla);
+			break;
+		}
+		case "H": {
+			controlador.intentar(tecla);
+			break;
+		}
+		case "I": {
+			controlador.intentar(tecla);
+			break;
+		}
+		case "J": {
+			controlador.intentar(tecla);
+			break;
+		}
+		case "K": {
+			controlador.intentar(tecla);
+			break;
+		}
+		case "L": {
+			controlador.intentar(tecla);
+			break;
+		}
+		case "M": {
+			controlador.intentar(tecla);
+			break;
+		}
+		case "N": {
+			controlador.intentar(tecla);
+			break;
+		}
+		case "Ñ": {
+			controlador.intentar(tecla);
+			break;
+		}
+		case "O": {
+			controlador.intentar(tecla);
+			break;
+		}
+		case "P": {
+			controlador.intentar(tecla);
+			break;
+		}
+		case "Q": {
+			controlador.intentar(tecla);
+			break;
+		}
+		case "R": {
+			controlador.intentar(tecla);
+			break;
+		}
+		case "S": {
+			controlador.intentar(tecla);
+			break;
+		}
+		case "T": {
+			controlador.intentar(tecla);
+			break;
+		}
+		case "U": {
+			controlador.intentar(tecla);
+			break;
+		}
+		case "V": {
+			controlador.intentar(tecla);
+			break;
+		}
+		case "W": {
+			controlador.intentar(tecla);
+			break;
+		}
+		case "X": {
+			controlador.intentar(tecla);
+			break;
+		}
+		case "Y": {
+			controlador.intentar(tecla);
+			break;
+		}
+		case "Z": {
+			controlador.intentar(tecla);
+			break;
+		}
+		}
+
 	}
 
 	private void volverAlMenu() {
@@ -411,13 +542,12 @@ public class Frontend {
 			volverAlMenu();
 			break;
 		}
-
 		}
 	}
 
 	public void panelesFinales(String condicion) {
 		int resultadoFinal;
-		String[] buttons = { "Reiniciar", "Volver al menu", "Salir" };
+		String[] buttons = { "Volver al menu", "Salir" };
 		switch (condicion) {
 		case "victoria":
 			resultadoFinal = JOptionPane.showOptionDialog(null, "!Felidades, ganaste!", "!Victoria!",
