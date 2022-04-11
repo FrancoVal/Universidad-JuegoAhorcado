@@ -61,5 +61,11 @@ public class ControllerAhorcado {
 	public void reiniciarValorTurnos(Dificultad dificultad) {
 		modoNormal.setTurnos(dificultad);
 	}
+	
+	public String getLetrasIncorrectas() {
+		String letrasIncorrectas = String.valueOf(modoNormal.verLetrasFallidasUtilizadas());
+		return letrasIncorrectas;
+	}
+	
 
 }

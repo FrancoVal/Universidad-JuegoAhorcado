@@ -2,6 +2,7 @@ package frontend;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.FlowLayout;
 import java.awt.Font;
@@ -326,6 +327,14 @@ public class Frontend {
 				accionBoton("Volver al menu");
 			}
 		});
+		
+		JButton itemIncorrectas = new JButton("Ver intentos");
+		panel.add(itemIncorrectas);
+		itemIncorrectas.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				accionBoton("Ver incorrectas");
+			}
+		});
 
 		this.labelTurnos = new JLabel("Turnos: " + String.valueOf(controlador.getTurnos()));
 		menuBar.add(this.labelTurnos);
@@ -593,6 +602,10 @@ public class Frontend {
 			frameJuego();
 			frameJuego.setVisible(true);
 			frameDificultad.setVisible(false);
+			break;
+		}
+		case "Ver incorrectas": {
+			JOptionPane.showMessageDialog(frameJuego,controlador.getLetrasIncorrectas());
 			break;
 		}
 		case "Volver al menu": {
