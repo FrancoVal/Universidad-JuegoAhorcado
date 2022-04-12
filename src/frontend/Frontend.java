@@ -23,7 +23,6 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JTextArea;
 import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 
@@ -244,9 +243,6 @@ public class Frontend {
 		panel.setLayout(new GridLayout(0, 8, 0, 0));
 
 		crearBotones(panel);
-
-		JPanel panelCronometro = new JPanel();
-		panel.add(panelCronometro);
 
 		panelJuego.add(palabra);
 
@@ -481,7 +477,7 @@ public class Frontend {
 		}
 	}
 
-	private void mostrarInstrucciones() { 
+	private void mostrarInstrucciones() {
 		JOptionPane.showMessageDialog(frameInicial,
 				"A continuacion vas a poder seleccionar entre dos opciones:\nIdioma\nDificultad");
 		JOptionPane.showMessageDialog(frameInicial,
