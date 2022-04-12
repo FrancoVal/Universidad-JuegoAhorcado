@@ -11,31 +11,13 @@ public class JuegoAhorcado {
 
 	private String palabra;
 
-	public JuegoAhorcado(Idioma idioma, Dificultad dificultad) {
-		this(idioma, dificultad, null);
-	}
-
-	public JuegoAhorcado(Idioma idioma, Dificultad dificultad, String palabra) {
-
-		this.crearCaracBasicas(idioma, dificultad);
-
-		if (palabra != null) {
-			this.palabra = palabra;
-			this.crearAdivinanza();
-		} else {
-			this.crearAdivinanzaAlAzar();
-		}
-		// CHEAT
-		System.out.println(this.palabra);
-	}
-
-	private void crearCaracBasicas(Idioma idioma, Dificultad dificultad) {
-
-		this.idioma = idioma;
-		this.dificultad = dificultad;
+	public JuegoAhorcado(Idioma idioma, Dificultad dificultad) { 
+		this.idioma=idioma;
+		this.dificultad=dificultad;
 		this.intentosFallidosRestantes = dificultad.intentos();
 		this.listadoLetrasFallidas = new char[this.intentosFallidosRestantes];
-
+		this.crearAdivinanzaAlAzar();
+		System.out.println(this.palabra);
 	}
 
 	private void crearAdivinanzaAlAzar() {
@@ -43,12 +25,6 @@ public class JuegoAhorcado {
 		Diccionario diccionario = new Diccionario(this.idioma, this.dificultad);
 		this.palabra = diccionario.elegirPalabraAlAzar();
 		this.adivinanza = new Adivinanza(this.palabra);
-	}
-
-	private void crearAdivinanza() {
-
-		this.adivinanza = new Adivinanza(this.palabra);
-
 	}
 
 	// INTENTOS
@@ -117,9 +93,9 @@ public class JuegoAhorcado {
 		}
 		return palabra;
 	}
-	
+
 	public boolean verificarVictoria() {
-		return(estado().equals(EstadoJuego.GANADO)) ? true : false;
+		return (estado().equals(EstadoJuego.GANADO)) ? true : false;
 	}
 
 	public void intentar(String tecla) {
@@ -136,7 +112,7 @@ public class JuegoAhorcado {
 		String labelIntentos = Integer.toString(intentos);
 		return labelIntentos;
 	}
-	
+
 	public String getLetrasIncorrectas() {
 		String letrasIncorrectas = String.valueOf(verLetrasFallidasUtilizadas());
 		return letrasIncorrectas;

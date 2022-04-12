@@ -10,7 +10,6 @@ public class ControllerAhorcado {
 
 	public void crearJuego(Idioma idioma, Dificultad dificultad) {
 		ahorcado = new JuegoAhorcado(idioma, dificultad);
-
 	}
 
 	public String getPalabra() {

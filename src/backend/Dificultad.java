@@ -24,11 +24,4 @@ private int intentosFallidosPosibles;
 		return this.intentosFallidosPosibles;
 	}
 	
-	public Dificultad siguienteNivel() {
-		if (this.equals(Dificultad.FACIL)) {
-			return Dificultad.MEDIO;
-		} else {
-			return Dificultad.DIFICIL;
-		}
-	}
 }
