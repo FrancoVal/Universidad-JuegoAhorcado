@@ -341,6 +341,8 @@ public class Frontend {
 
 		this.labelTurnos = new JLabel("Turnos: " + String.valueOf(controlador.getTurnos()));
 		menuBar.add(this.labelTurnos);
+		
+		frameJuego.setVisible(true);
 
 		return frameJuego;
 	}
@@ -414,10 +416,17 @@ public class Frontend {
 	}
 
 	private void reiniciarJuego() {
-		controlador.reiniciarValorTurnos(this.dificultadAUtilizar);
-		this.labelTurnos.setText("Turnos: " + String.valueOf(controlador.getTurnos()));
-		this.palabra.setText(controlador.getPalabra());
+	
+		frameJuego.dispose();
 		frameJuego();
+		frameJuego.revalidate();
+		frameJuego.repaint();
+		actualizarPantalla();
+		
+		
+		
+		
+		
 	}
 
 	private void accionBoton(String boton) {

@@ -15,14 +15,22 @@ public class ControllerAhorcado {
 	public JuegoAhorcado modoNormal;
 	public Torneo modoTorneo;
 	public PruebaIA prueba;
+	
+	
 
 	public void crearJuego(Idioma idioma, Dificultad dificultad, Modo modo, String palabra) {
+		
 		if (modo.equals(Modo.NORMAL)) {
 			modoNormal = new JuegoAhorcado(idioma, dificultad);
 		} else {
 			prueba = new PruebaIA(idioma, dificultad,palabra);
 		}
 	}
+	
+	
+		
+	
+	
 
 	public String getPalabra() {
 		return modoNormal.getPalabra();
