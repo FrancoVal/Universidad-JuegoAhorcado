@@ -23,6 +23,8 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 
@@ -49,6 +51,7 @@ public class Frontend {
 	Modo modoAJugar;
 	Idioma idiomaAUtilizar;
 	Dificultad dificultadAUtilizar;
+	public String palabraContraIA;
 
 	public Frontend() {
 		initialize();
@@ -261,7 +264,7 @@ public class Frontend {
 
 	private JFrame frameJuego() {
 
-		controlador.crearJuego(idiomaAUtilizar, dificultadAUtilizar, modoAJugar);
+		controlador.crearJuego(idiomaAUtilizar, dificultadAUtilizar, modoAJugar, palabraContraIA);
 		frameJuego = new JFrame();
 		frameJuego.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frameJuego.setBounds(100, 100, 800, 600);
@@ -553,6 +556,16 @@ public class Frontend {
 			break;
 		}
 		case "Modo torneo": {
+			JOptionPane.showMessageDialog(frameModo, "Por favor escribí tu palabra elegida en el campo superior.");
+			JTextArea inputUsuario = new JTextArea(5, 5);
+			JOptionPane.showInputDialog(inputUsuario);
+			if (controlador.verificarInput(inputUsuario)) {
+				this.palabraContraIA = inputUsuario.getText().toUpperCase();
+			} else {
+				JOptionPane.showMessageDialog(frameModo, "Por favor introducir un input correcto.");
+				volverAlMenu();
+			}
+
 			modoAJugar = Modo.TORNEO;
 			frameIdioma();
 			frameIdioma.setVisible(true);

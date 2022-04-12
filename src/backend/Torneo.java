@@ -50,7 +50,7 @@ public class Torneo {
 
 	}
 
-	public void probarLetra(char letra) throws NoHayMasIntentosException, NoTieneChancesException,
+	public void probarLetra(char letra) throws NoHayMasIntentosException, NoTieneChancesException, 
 			NoPuedeRepetirLetraException, NoPuedeJugarAISinoEsDesafiadaException {
 
 		/*
