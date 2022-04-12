@@ -21,7 +21,7 @@ public class Diccionario {
 					"src/data/" + idioma.nombre() + "/" + dificultad.nombre() + ".txt"));
 
 			while (escaneo.hasNext()) {
-				this.palabras.add(removerCaracteresEspeciales(escaneo.nextLine()));
+				this.palabras.add(escaneo.nextLine());
 			}
 
 		} catch (FileNotFoundException e) { //
@@ -29,13 +29,6 @@ public class Diccionario {
 			e.printStackTrace();
 		}
 
-	}
-
-	// remueve caracteres especiales de las palabras.
-	public static String removerCaracteresEspeciales(String cadena) {
-		cadena = Normalizer.normalize(cadena, Normalizer.Form.NFD);
-		cadena = cadena.replaceAll("[\\p{InCombiningDiacriticalMarks}]", "");
-		return cadena;
 	}
 
 	public String elegirPalabraAlAzar() {
