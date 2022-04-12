@@ -25,6 +25,8 @@ public class JuegoAhorcado {
 		} else {
 			this.crearAdivinanzaAlAzar();
 		}
+		//CHEAT
+		System.out.print(this.palabra);
 	}
 
 	private void crearCaracBasicas(Idioma idioma, Dificultad dificultad) {
