@@ -23,20 +23,21 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+<<<<<<< Updated upstream
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+=======
+>>>>>>> Stashed changes
 import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 
 import backend.Dificultad;
 import backend.Idioma;
-import backend.Modo;
 import controller.ControllerAhorcado;
 
 public class Frontend {
 
 	private JFrame frameInicial;
-	private JFrame frameModo;
 	private JFrame frameIdioma;
 	private JFrame frameDificultad;
 	private JFrame frameJuego;
@@ -48,10 +49,8 @@ public class Frontend {
 
 	ControllerAhorcado controlador = new ControllerAhorcado();
 
-	Modo modoAJugar;
 	Idioma idiomaAUtilizar;
 	Dificultad dificultadAUtilizar;
-	public String palabraContraIA;
 
 	public Frontend() {
 		initialize();
@@ -125,45 +124,6 @@ public class Frontend {
 		});
 		frameInicial.getContentPane().add(botonInicio);
 		return frameInicial;
-	}
-
-	private JFrame frameModo() {
-		frameModo = new JFrame();
-		fondoDePantalla(frameModo);
-		frameModo.setTitle("Ahorcado 2.0");
-		frameModo.setBounds(100, 100, 450, 300);
-		frameModo.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frameModo.getContentPane().setLayout(null);
-		frameModo.setLocationRelativeTo(null);
-
-		JButton botonInicial = new JButton("Modo normal");
-		botonInicial.setBounds(169, 56, 100, 23);
-		frameModo.getContentPane().add(botonInicial);
-		botonInicial.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				accionBoton("Modo normal");
-			}
-		});
-
-		JButton botonMedio = new JButton("Modo torneo");
-		botonMedio.setBounds(169, 90, 100, 23);
-		frameModo.getContentPane().add(botonMedio);
-		botonMedio.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				accionBoton("Modo torneo");
-			}
-		});
-
-		JButton botonVuelta = new JButton("Volver al menu");
-		botonVuelta.setBounds(10, 227, 114, 23);
-		frameModo.getContentPane().add(botonVuelta);
-		botonVuelta.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				accionBoton("Volver al menu");
-			}
-		});
-
-		return frameModo;
 	}
 
 	private JFrame frameIdioma() {
@@ -264,7 +224,7 @@ public class Frontend {
 
 	private JFrame frameJuego() {
 
-		controlador.crearJuego(idiomaAUtilizar, dificultadAUtilizar, modoAJugar, palabraContraIA);
+		controlador.crearJuego(idiomaAUtilizar, dificultadAUtilizar);
 		frameJuego = new JFrame();
 		frameJuego.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frameJuego.setBounds(100, 100, 800, 600);
@@ -389,6 +349,7 @@ public class Frontend {
 		}
 	}
 
+<<<<<<< Updated upstream
 	private void accionBotonTeclado(String tecla) {
 		if (controlador.getEstado()) {
 
@@ -429,6 +390,8 @@ public class Frontend {
 		
 	}
 
+=======
+>>>>>>> Stashed changes
 	private void accionBoton(String boton) {
 		switch (boton) {
 		case "Iniciar Musica": {
@@ -444,6 +407,7 @@ public class Frontend {
 			break;
 		}
 		case "Comenzar juego": {
+<<<<<<< Updated upstream
 			frameModo();
 			frameModo.setVisible(true);
 			frameInicial.setVisible(false);
@@ -468,9 +432,11 @@ public class Frontend {
 			}
 
 			modoAJugar = Modo.TORNEO;
+=======
+>>>>>>> Stashed changes
 			frameIdioma();
 			frameIdioma.setVisible(true);
-			frameModo.setVisible(false);
+			frameInicial.setVisible(false);
 			break;
 		}
 		case "Español": {
@@ -528,6 +494,41 @@ public class Frontend {
 		}
 	}
 
+<<<<<<< Updated upstream
+=======
+	private void accionBotonTeclado(String tecla) {
+		if (controlador.getEstado()) {
+
+			controlador.intentar(tecla);
+			actualizarPantalla();
+		} else {
+			panelesFinales("Derrota");
+		}
+
+	}
+
+	private void volverAlMenu() {
+		frameInicial.setVisible(true);
+		if (frameIdioma.isActive()) {
+			frameIdioma.setVisible(false);
+		} else if (frameDificultad.isActive()) {
+			frameDificultad.setVisible(false);
+		} else {
+			frameJuego.setVisible(false);
+		}
+	}
+
+	private void reiniciarJuego() {
+
+		frameJuego.dispose();
+		frameJuego();
+		frameJuego.revalidate();
+		frameJuego.repaint();
+		actualizarPantalla();
+
+	}
+
+>>>>>>> Stashed changes
 	private void panelesFinales(String condicion) {
 		int resultadoFinal;
 		String[] buttons = { "Reiniciar", "Volver al menu", "Salir" };
@@ -560,8 +561,6 @@ public class Frontend {
 	private void mostrarInstrucciones() {
 		JOptionPane.showMessageDialog(frameInicial,
 				"A continuacion vas a poder seleccionar entre distintas opciones:\nModo de juego\nIdioma\nDificultad");
-		JOptionPane.showMessageDialog(frameInicial,
-				"Hay dos modos de juego para elegir:\nModo normal: tratas de adivinar la palabra.\nModo torneo: jugas vos y si ganas juega la maquina y asi sucesivamente.");
 		JOptionPane.showMessageDialog(frameInicial,
 				"Vas a ver tres idiomas para elegir en qué jugar:\nEspañol.\nIngles.\nFrances.");
 		JOptionPane.showMessageDialog(frameInicial,

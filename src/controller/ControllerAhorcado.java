@@ -6,12 +6,10 @@ import backend.Dificultad;
 import backend.EstadoJuego;
 import backend.Idioma;
 import backend.JuegoAhorcado;
-import backend.Modo;
-import backend.PruebaIA;
-import backend.Torneo;
 
 public class ControllerAhorcado {
 
+<<<<<<< Updated upstream
 	public JuegoAhorcado modoNormal;
 	public Torneo modoTorneo;
 	public PruebaIA prueba;
@@ -25,6 +23,12 @@ public class ControllerAhorcado {
 		} else {
 			prueba = new PruebaIA(idioma, dificultad,palabra);
 		}
+=======
+	public JuegoAhorcado ahorcado;
+
+	public void crearJuego(Idioma idioma, Dificultad dificultad) {
+		ahorcado = new JuegoAhorcado(idioma, dificultad);
+>>>>>>> Stashed changes
 	}
 	
 	
@@ -33,20 +37,25 @@ public class ControllerAhorcado {
 	
 
 	public String getPalabra() {
-		return modoNormal.getPalabra();
+		return ahorcado.getPalabra();
 	}
 
 	public String getIntentosRestantes() {
+<<<<<<< Updated upstream
 		int intentos = modoNormal.cantidadDeIntentosRestantes();
 		String labelIntentos = Integer.toString(intentos);
 		return labelIntentos;
+=======
+		return ahorcado.getIntentosRestantes();
+>>>>>>> Stashed changes
 	}
 
 	public boolean getEstado() {
-		return modoNormal.seguimosJugando();
+		return ahorcado.seguimosJugando();
 	}
 
 	public void intentar(String tecla) {
+<<<<<<< Updated upstream
 		char c = tecla.charAt(0);
 		try {
 			modoNormal.turno(c);
@@ -58,6 +67,13 @@ public class ControllerAhorcado {
 
 	public boolean verificarVictoria() {
 		return (modoNormal.estado().equals(EstadoJuego.GANADO)) ? true : false;
+=======
+		ahorcado.intentar(tecla);
+	}
+
+	public boolean verificarVictoria() {
+		return ahorcado.verificarVictoria();
+>>>>>>> Stashed changes
 	}
 
 	public void actualizarPantalla() {
@@ -67,20 +83,24 @@ public class ControllerAhorcado {
 	}
 
 	public int getTurnos() {
-		return modoNormal.getTurnos();
+		return ahorcado.getTurnos();
 	}
 
 	public void reiniciarValorTurnos(Dificultad dificultad) {
-		modoNormal.setTurnos(dificultad);
+		ahorcado.setTurnos(dificultad);
 	}
 
 	public String getLetrasIncorrectas() {
+<<<<<<< Updated upstream
 		String letrasIncorrectas = String.valueOf(modoNormal.verLetrasFallidasUtilizadas());
 		return letrasIncorrectas;
 	}
 	
 	public boolean verificarInput(JTextArea input) {
 		return this.prueba.verificarInput(input);
+=======
+		return ahorcado.getLetrasIncorrectas();
+>>>>>>> Stashed changes
 	}
 
 }
