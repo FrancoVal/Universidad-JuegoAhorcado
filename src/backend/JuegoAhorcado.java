@@ -25,7 +25,7 @@ public class JuegoAhorcado {
 		} else {
 			this.crearAdivinanzaAlAzar();
 		}
-		//CHEAT
+		// CHEAT
 		System.out.println(this.palabra);
 	}
 
@@ -116,6 +116,30 @@ public class JuegoAhorcado {
 			palabra = sb.toString();
 		}
 		return palabra;
+	}
+	
+	public boolean verificarVictoria() {
+		return(estado().equals(EstadoJuego.GANADO)) ? true : false;
+	}
+
+	public void intentar(String tecla) {
+		char c = tecla.charAt(0);
+		try {
+			turno(c);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	public String getIntentosRestantes() {
+		int intentos = cantidadDeIntentosRestantes();
+		String labelIntentos = Integer.toString(intentos);
+		return labelIntentos;
+	}
+	
+	public String getLetrasIncorrectas() {
+		String letrasIncorrectas = String.valueOf(verLetrasFallidasUtilizadas());
+		return letrasIncorrectas;
 	}
 
 	public int getTurnos() {

@@ -23,11 +23,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-<<<<<<< Updated upstream
-import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
-=======
->>>>>>> Stashed changes
 import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 
@@ -301,7 +297,7 @@ public class Frontend {
 
 		this.labelTurnos = new JLabel("Turnos: " + String.valueOf(controlador.getTurnos()));
 		menuBar.add(this.labelTurnos);
-		
+
 		frameJuego.setVisible(true);
 
 		return frameJuego;
@@ -349,49 +345,6 @@ public class Frontend {
 		}
 	}
 
-<<<<<<< Updated upstream
-	private void accionBotonTeclado(String tecla) {
-		if (controlador.getEstado()) {
-
-			
-			controlador.intentar(tecla);
-			actualizarPantalla();
-		} else {
-			panelesFinales("Derrota");
-		}
-
-	}
-
-	private void volverAlMenu() {
-		frameInicial.setVisible(true);
-
-		if (frameModo.isActive()) {
-			frameModo.setVisible(false);
-		} else if (frameIdioma.isActive()) {
-			frameIdioma.setVisible(false);
-		} else if (frameDificultad.isActive()) {
-			frameDificultad.setVisible(false);
-		} else {
-			frameJuego.setVisible(false);
-		}
-	}
-
-	private void reiniciarJuego() {
-	
-		frameJuego.dispose();
-		frameJuego();
-		frameJuego.revalidate();
-		frameJuego.repaint();
-		actualizarPantalla();
-		
-		
-		
-		
-		
-	}
-
-=======
->>>>>>> Stashed changes
 	private void accionBoton(String boton) {
 		switch (boton) {
 		case "Iniciar Musica": {
@@ -407,33 +360,6 @@ public class Frontend {
 			break;
 		}
 		case "Comenzar juego": {
-<<<<<<< Updated upstream
-			frameModo();
-			frameModo.setVisible(true);
-			frameInicial.setVisible(false);
-			break;
-		}
-		case "Modo normal": {
-			modoAJugar = Modo.NORMAL;
-			frameIdioma();
-			frameIdioma.setVisible(true);
-			frameModo.setVisible(false);
-			break;
-		}
-		case "Modo torneo": {
-			JOptionPane.showMessageDialog(frameModo, "Por favor escribí tu palabra elegida en el campo superior.");
-			JTextArea inputUsuario = new JTextArea(5, 5);
-			JOptionPane.showInputDialog(inputUsuario);
-			if (controlador.verificarInput(inputUsuario)) {
-				this.palabraContraIA = inputUsuario.getText().toUpperCase();
-			} else {
-				JOptionPane.showMessageDialog(frameModo, "Por favor introducir un input correcto.");
-				volverAlMenu();
-			}
-
-			modoAJugar = Modo.TORNEO;
-=======
->>>>>>> Stashed changes
 			frameIdioma();
 			frameIdioma.setVisible(true);
 			frameInicial.setVisible(false);
@@ -494,8 +420,6 @@ public class Frontend {
 		}
 	}
 
-<<<<<<< Updated upstream
-=======
 	private void accionBotonTeclado(String tecla) {
 		if (controlador.getEstado()) {
 
@@ -528,7 +452,6 @@ public class Frontend {
 
 	}
 
->>>>>>> Stashed changes
 	private void panelesFinales(String condicion) {
 		int resultadoFinal;
 		String[] buttons = { "Reiniciar", "Volver al menu", "Salir" };
@@ -558,9 +481,9 @@ public class Frontend {
 		}
 	}
 
-	private void mostrarInstrucciones() {
+	private void mostrarInstrucciones() { 
 		JOptionPane.showMessageDialog(frameInicial,
-				"A continuacion vas a poder seleccionar entre distintas opciones:\nModo de juego\nIdioma\nDificultad");
+				"A continuacion vas a poder seleccionar entre dos opciones:\nIdioma\nDificultad");
 		JOptionPane.showMessageDialog(frameInicial,
 				"Vas a ver tres idiomas para elegir en qué jugar:\nEspañol.\nIngles.\nFrances.");
 		JOptionPane.showMessageDialog(frameInicial,
