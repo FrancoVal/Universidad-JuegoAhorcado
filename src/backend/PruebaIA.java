@@ -3,28 +3,25 @@ package backend;
 import javax.swing.JTextArea;
 
 public class PruebaIA {
-	
+
 	private Idioma idioma;
 	private Dificultad dificultad;
 	private Adivinanza adivinanza;
-	
+
 	private int intentosFallidosRestantes;
 	private char[] listadoLetrasFallidas;
-	
-	private String palabra;
-	
-	public PruebaIA(Idioma idioma, Dificultad dificultad,String palabra) {
-		this.idioma=idioma;
-		this.dificultad=dificultad;
-		this.palabra=palabra;
-	}
-	private void crearCaracBasicas(Idioma idioma, Dificultad dificultad) {
+
+	private String palabraIA;
+	public String letrasAProbar = "ESIARNTOLCDUPMGHBYFVKWZXQJ";
+
+	public PruebaIA(Idioma idioma, Dificultad dificultad, String palabra) {
 		this.idioma = idioma;
 		this.dificultad = dificultad;
-		this.intentosFallidosRestantes = dificultad.intentos();
+		this.palabraIA = palabra;
 		this.listadoLetrasFallidas = new char[this.intentosFallidosRestantes];
 
 	}
+
 	// INTENTOS
 	public boolean quedanIntentos() {
 		return (this.intentosFallidosRestantes > 0) ? true : false;
@@ -65,6 +62,19 @@ public class PruebaIA {
 	}
 	// fin de ESTADO
 
+	public void juegaIA() {
+		String cadenaIA = getLetrasAProbar();
+		while(seguimosJugando()) {
+			for(int i=0;i<cadenaIA.length();i++) {
+				try {
+					turno(cadenaIA.charAt(i));
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	}
+	
 	// TURNO
 	public void turno(char letra) throws Exception {
 		if (this.seguimosJugando()) {
@@ -80,11 +90,6 @@ public class PruebaIA {
 			this.listadoLetrasFallidas[this.dificultad.intentos() - this.intentosFallidosRestantes - 1] = letra;
 		}
 	}
-	
-	public boolean verificarInput(JTextArea input) {
-		return (input.getText() instanceof String) ? true : false;
-	}
-	
 	// fin de TURNO
 
 	public String getPalabra() {
@@ -96,6 +101,10 @@ public class PruebaIA {
 		}
 		return palabra;
 	}
+	
+	public void setPalabraIA(String palabra) {
+		this.palabraIA=palabra;
+	}
 
 	public int getTurnos() {
 		return this.intentosFallidosRestantes;
@@ -103,5 +112,13 @@ public class PruebaIA {
 
 	public void setTurnos(Dificultad dificultad) {
 		this.intentosFallidosRestantes = dificultad.intentos();
+	}
+	
+	public String getLetrasAProbar() {
+		return letrasAProbar;
+	}
+
+	public void setLetrasAProbar(String letrasAProbar) {
+		this.letrasAProbar = letrasAProbar;
 	}
 }

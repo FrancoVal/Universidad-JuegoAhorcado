@@ -23,7 +23,6 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
@@ -40,11 +39,14 @@ public class Frontend {
 	private JFrame frameIdioma;
 	private JFrame frameDificultad;
 	private JFrame frameJuego;
+	private JFrame frameJuegoIA;
 
 	private JPanel panelJuego;
+	private JPanel panelJuegoIA;
 
 	private JLabel labelTurnos;
 	private JLabel palabra;
+	private JLabel labelPalabraIA;
 
 	ControllerAhorcado controlador = new ControllerAhorcado();
 
@@ -341,10 +343,80 @@ public class Frontend {
 
 		this.labelTurnos = new JLabel("Turnos: " + String.valueOf(controlador.getTurnos()));
 		menuBar.add(this.labelTurnos);
-		
+
 		frameJuego.setVisible(true);
 
 		return frameJuego;
+	}
+
+	private JFrame frameJuegoIA() {
+
+		controlador.crearJuego(idiomaAUtilizar, dificultadAUtilizar, modoAJugar, palabraContraIA);
+		frameJuegoIA = new JFrame();
+		frameJuegoIA.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frameJuegoIA.setBounds(100, 100, 800, 600);
+		frameJuegoIA.setLayout(new FlowLayout());
+		frameJuegoIA.setLocationRelativeTo(null);
+
+		panelJuegoIA = new JPanel();
+		panelJuegoIA.setBorder(new EmptyBorder(5, 5, 5, 5));
+
+		frameJuegoIA.setContentPane(panelJuegoIA);
+		panelJuegoIA.setLayout(new BorderLayout(0, 0));
+		panelJuegoIA.setForeground(Color.WHITE);
+
+		this.labelPalabraIA = new JLabel(palabraContraIA);
+		this.labelPalabraIA.setHorizontalAlignment(JLabel.CENTER);
+		this.labelPalabraIA.setForeground(Color.BLACK);
+		this.labelPalabraIA.setFont(new Font("Serif", Font.PLAIN, 35));
+
+		JPanel panel = new JPanel();
+		frameJuegoIA.add(panel, BorderLayout.SOUTH);
+		panel.setLayout(new GridLayout(0, 8, 0, 0));
+
+		panelJuegoIA.add(labelPalabraIA);
+
+		JMenuBar menuBar = new JMenuBar();
+		frameJuegoIA.setJMenuBar(menuBar);
+
+		JMenuItem itemMusicaIniciar = new JMenuItem("\u25B6");
+		itemMusicaIniciar.setBounds(393, 0, 43, 23);
+		menuBar.add(itemMusicaIniciar);
+		itemMusicaIniciar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				accionBoton("Iniciar Musica");
+			}
+		});
+
+		JMenuItem itemMusicaDetener = new JMenuItem("\u23F8");
+		itemMusicaDetener.setBounds(351, 0, 43, 23);
+		menuBar.add(itemMusicaDetener);
+		itemMusicaDetener.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				accionBoton("Detener Musica");
+			}
+		});
+
+		JMenuItem itemRegresoMenu = new JMenuItem("Volver al menu");
+		menuBar.add(itemRegresoMenu);
+		itemRegresoMenu.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				accionBoton("Volver al menu");
+			}
+		});
+
+		JButton itemIncorrectas = new JButton("Ver intentos");
+		panel.add(itemIncorrectas);
+		itemIncorrectas.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				accionBoton("Ver incorrectas");
+			}
+		});
+
+		frameJuegoIA.setVisible(true);
+
+		controlador.juegaIA();
+		return frameJuegoIA;
 	}
 
 	private void crearBotones(JPanel panel) {
@@ -392,7 +464,6 @@ public class Frontend {
 	private void accionBotonTeclado(String tecla) {
 		if (controlador.getEstado()) {
 
-			
 			controlador.intentar(tecla);
 			actualizarPantalla();
 		} else {
@@ -410,23 +481,21 @@ public class Frontend {
 			frameIdioma.setVisible(false);
 		} else if (frameDificultad.isActive()) {
 			frameDificultad.setVisible(false);
-		} else {
+		} else if (frameJuego.isActive()) {
 			frameJuego.setVisible(false);
+		} else {
+			frameJuegoIA.setVisible(false);
 		}
 	}
 
 	private void reiniciarJuego() {
-	
+
 		frameJuego.dispose();
 		frameJuego();
 		frameJuego.revalidate();
 		frameJuego.repaint();
 		actualizarPantalla();
-		
-		
-		
-		
-		
+
 	}
 
 	private void accionBoton(String boton) {
@@ -450,29 +519,24 @@ public class Frontend {
 			break;
 		}
 		case "Modo normal": {
-			modoAJugar = Modo.NORMAL;
+			this.modoAJugar = Modo.NORMAL;
 			frameIdioma();
 			frameIdioma.setVisible(true);
 			frameModo.setVisible(false);
 			break;
 		}
-		case "Modo torneo": {
-			JOptionPane.showMessageDialog(frameModo, "Por favor escribí tu palabra elegida en el campo superior.");
-			JTextArea inputUsuario = new JTextArea(5, 5);
-			JOptionPane.showInputDialog(inputUsuario);
-			if (controlador.verificarInput(inputUsuario)) {
-				this.palabraContraIA = inputUsuario.getText().toUpperCase();
-			} else {
-				JOptionPane.showMessageDialog(frameModo, "Por favor introducir un input correcto.");
-				volverAlMenu();
-			}
-
-			modoAJugar = Modo.TORNEO;
-			frameIdioma();
-			frameIdioma.setVisible(true);
-			frameModo.setVisible(false);
-			break;
-		}
+//		case "Modo torneo": {
+//			JOptionPane.showMessageDialog(frameModo, "Por favor escribí tu palabra elegida en el campo superior.");
+//			JTextArea inputUsuario = new JTextArea(5, 5);
+//			JOptionPane.showInputDialog(inputUsuario);
+//			this.palabraContraIA = inputUsuario.getText();
+//
+//			this.modoAJugar = Modo.TORNEO;
+//			frameIdioma();
+//			frameIdioma.setVisible(true);
+//			frameModo.setVisible(false);
+//			break;
+//		}
 		case "Español": {
 			idiomaAUtilizar = Idioma.ESPANIOL;
 			frameDificultad();
@@ -498,22 +562,37 @@ public class Frontend {
 		}
 		case "Inicial": {
 			dificultadAUtilizar = Dificultad.FACIL;
-			frameJuego();
-			frameJuego.setVisible(true);
+			if (this.modoAJugar.equals(Modo.NORMAL)) {
+				frameJuego();
+				frameJuego.setVisible(true);
+			} else {
+				frameJuegoIA();
+				frameJuegoIA.setVisible(true);
+			}
 			frameDificultad.setVisible(false);
 			break;
 		}
 		case "Medio": {
 			dificultadAUtilizar = Dificultad.MEDIO;
-			frameJuego();
-			frameJuego.setVisible(true);
+			if (this.modoAJugar.equals(Modo.NORMAL)) {
+				frameJuego();
+				frameJuego.setVisible(true);
+			} else {
+				frameJuegoIA();
+				frameJuegoIA.setVisible(true);
+			}
 			frameDificultad.setVisible(false);
 			break;
 		}
 		case "Dificil": {
 			dificultadAUtilizar = Dificultad.DIFICIL;
-			frameJuego();
-			frameJuego.setVisible(true);
+			if (this.modoAJugar.equals(Modo.NORMAL)) {
+				frameJuego();
+				frameJuego.setVisible(true);
+			} else {
+				frameJuegoIA();
+				frameJuegoIA.setVisible(true);
+			}
 			frameDificultad.setVisible(false);
 			break;
 		}
@@ -526,6 +605,10 @@ public class Frontend {
 			break;
 		}
 		}
+	}
+
+	private void juegaIA() {
+		controlador.juegaIA();
 	}
 
 	private void panelesFinales(String condicion) {
